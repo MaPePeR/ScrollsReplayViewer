@@ -14,7 +14,7 @@
 
     function SgrReader(plaintext) {
         this.messages = plaintext.split("\n\n\n");
-        this.messagecount = 3;
+        this.messagecount = 3; //Skip ServerInfo + 2xGameInfo
         this.parseMessage = function (i) {
             return JSON.parse(this.messages[i]);
         };
@@ -39,7 +39,7 @@
     }
     function SprReader(plaintext) {
         this.messages = plaintext.split("\n");
-        this.messagecount = 1;
+        this.messagecount = 2; //Skip metadata-line and GameInfo
         this.parseMessage = function (i) {
             return JSON.parse(this.messages[i].split('|')[2]);
         };
@@ -51,7 +51,7 @@
             return this.parseMessage(this.messagecount - 1);
         };
         this.getHeaders = function () {
-            var metadata = JSON.parse(this.messages[0].split('|')[1]);
+            var metadata = JSON.parse(this.messages[0].split('|')[1]); //Read the metadata from the first line.
             return {
                 "version": metadata.version,
                 "black" : metadata['black-name'],
@@ -69,7 +69,7 @@
             if (fileobject.name.charAt(fileobject.name.length - 2) ===  'g') {//ScrollsGuide .sgr replay
                 callback(new SgrReader(e.target.result));
             } else if (fileobject.name.charAt(fileobject.name.length - 2) ===  'p') {//ScrollsPost .spr replay
-                callback(new SgrReader(e.target.result));
+                callback(new SprReader(e.target.result));
             } else {
                 throw "wrong file format?";
             }
