@@ -4,10 +4,51 @@
     <script type="text/javascript" src="replayreader.js"></script>
     <script type="text/javascript" src="replayviewer.js"></script>
     <style type="text/css">
+    #game {
+      position: relative;
+      margin: auto;
+      width: 800px;
+      height: 600px;
+      border: 1px solid black;
+    }
+    #gameheader {
+      position: relative;
+      width: 100%;
+      height: 24px;
+      /*background-color: green;*/
+      font-size: 20px;
+    }
+    #roundcounter {
+      position: absolute;
+      left: 50%;
+      width: 3em;
+      text-align: center;
+      margin-left: -1.5em;
+      border: 1px solid black;
+      border-radius: 1ex;
+    }
+    .playernameleft {
+      position: absolute;
+      left: 0px;
+      right: 50%;
+      text-align: right;
+      padding-right: 2em;
+    }
+    .playernameright {
+      position: absolute;
+      left: 50%;
+      right: 0px;
+      text-align: left;
+      padding-left: 2em;
+    }
+    .playername {
+      width: 200px;
+      font-size: 14px;
+    }
     </style>
   </head>
   <body>
-    <div id="replaychooser" style="position: absolute; top:0px; left: 0px; right:0px; height: 100px">
+    <div id="replaychooser">
       <center>
         <table>
           <tr><th>Left Player</th><th>Right Player</th></tr>
@@ -17,5 +58,12 @@
         </table>
       </center>
     </div>
+    <div id="game">
+      <!-- playername-classes will be updated according to who is the left and right player -->
+      <div id="gameheader"><div class="playernameleft" id="playernamewhite">plyer 1</div><div id="roundcounter">1</div><div class="playernameright" id="playernameblack">a</div></div>
+      <div id="gamefield"></div>
+      <div id="handcards"></div>
+    </div>
+    <div id="debugcontrols"></div>
   </body>
 </html>
