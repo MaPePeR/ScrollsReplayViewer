@@ -1,5 +1,5 @@
 /*jslint browser: true, vars: true, eqeq: true*/
-/*global alert: false, $: false*/
+/*global alert: false, $: false, replayreader: false*/
 
 if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
     alert('The File APIs are not fully supported in this browser.');
@@ -29,9 +29,15 @@ $(function () {
     }
     $("#replayfileL, #replayfileR").on('change', validateReplayFiles);
     function readFiles() {
-        var readerL = new FileReader();
-        var readerR = new FileReader();
-        $("#replaychooser").hide();
+        var fileL = document.getElementById("replayfileL").files[0];
+        var fileR = document.getElementById("replayfileR").files[0];
+        console.log(fileL, fileR)
+        replayreader.init(fileL, fileR, function () {
+            console.log("init-callback");
+            replayreader.getNextMessage();
+        });
+
+        //$("#replaychooser").hide();
     }
     $("#playButton").on('click', readFiles);
     validateReplayFiles();
