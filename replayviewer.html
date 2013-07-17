@@ -3,6 +3,7 @@
     <script type="text/javascript" src="jquery-2.0.3.js"></script>
     <script type="text/javascript" src="replayreader.js"></script>
     <script type="text/javascript" src="replayviewer.js"></script>
+    <script type="text/javascript" src="debugtools.js"></script>
     <style type="text/css">
     #game {
       position: relative;
@@ -45,6 +46,34 @@
       width: 200px;
       font-size: 14px;
     }
+    .field {
+      position: absolute;
+      width: 50%;
+      max-height: 75%;
+    }
+    
+    .fieldleft {
+      left: 0%;
+      background-color: blue;
+    }
+    .fieldleft .fieldrow:nth-child(odd) {
+      margin-left: 7%;
+    }
+    .fieldright {
+      text-align: right;
+      right: 0%;
+      background-color: yellow;
+    }
+    .fieldright .fieldrow:nth-child(odd) {
+      margin-right: 7%;
+    }
+    .fieldrow {
+      position: relative;
+      height: 20%;
+    }
+    .scroll {
+      height: 20%;
+    }
     </style>
   </head>
   <body>
@@ -61,7 +90,7 @@
     <div id="game">
       <!-- playername-classes will be updated according to who is the left and right player -->
       <div id="gameheader"><div class="playernameleft" id="playernamewhite">plyer 1</div><div id="roundcounter">1</div><div class="playernameright" id="playernameblack">a</div></div>
-      <div id="gamefield"></div>
+      <div id="gamefield"><div class="field fieldleft" id="fieldwhite"></div><div class="field fieldright" id="fieldblack"></div></div>
       <div id="handcards"></div>
     </div>
     <div id="debugcontrols"></div>
