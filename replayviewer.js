@@ -6,7 +6,6 @@ if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 }
 
 //global:
-
 $(function () {
     "use strict";
     var filenamePattern = /\.s[gp]r$/; //For ScrollsGuide(.sgr) and ScrollsPost(.spr)-Replays
@@ -35,10 +34,8 @@ $(function () {
         var fileL = document.getElementById("replayfileL").files[0];
         var fileR = document.getElementById("replayfileR").files[0];
         replayreader.init(fileL, fileR, function () {
-            replayreader.getNextMessage();
+            $("#replaychooser").hide();
         });
-
-        //$("#replaychooser").hide();
     }
     $("#playButton").on('click', readFiles);
     validateReplayFiles();

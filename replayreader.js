@@ -16,6 +16,7 @@
         this.messages = plaintext.split("\n\n\n");
         this.messagecount = 3; //Skip ServerInfo + 2xGameInfo
         this.parseMessage = function (i) {
+            console.log(this.messages[i])
             return JSON.parse(this.messages[i]);
         };
         this.nextMessage = function () {
