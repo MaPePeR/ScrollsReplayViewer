@@ -6,11 +6,11 @@
     <script type="text/javascript" src="debugtools.js"></script>
     <style type="text/css">
     #game {
+      resize:both;
       position: relative;
       margin: auto;
-      width: 800px;
-      height: 600px;
-      border: 1px solid black;
+      width: 100%;
+      height: 100%;
     }
     #gameheader {
       position: relative;
@@ -49,30 +49,35 @@
     .field {
       position: absolute;
       width: 50%;
-      max-height: 75%;
+      height: 75%;
     }
-    
+
+    /*Left Field*/
     .fieldleft {
+      text-align: left;
       left: 0%;
       background-color: blue;
     }
-    .fieldleft .fieldrow:nth-child(odd) {
-      margin-left: 7%;
-    }
+
+    /*Right field*/
     .fieldright {
       text-align: right;
       right: 0%;
       background-color: yellow;
     }
-    .fieldright .fieldrow:nth-child(odd) {
-      margin-right: 7%;
-    }
-    .fieldrow {
-      position: relative;
-      height: 20%;
-    }
     .fieldscroll {
-      height: 20%;
+      position: absolute;
+    }
+    .idol {
+      text-align: center;
+      position: absolute;
+      background-color: gray;
+    }
+    .fieldleft .idol {
+      left: 0px;
+    }
+    .fieldright .idol {
+      right: 0px;
     }
     #handcards {
       position: absolute;
@@ -94,6 +99,7 @@
       height: 130%;
     }
     </style>
+    <script type="text/javascript" src="less-1.4.1-min.js"></script>
   </head>
   <body>
     <div id="replaychooser">
@@ -109,7 +115,10 @@
     <div id="game">
       <!-- playername-classes will be updated according to who is the left and right player -->
       <div id="gameheader"><div class="playernameleft" id="playernamewhite">plyer 1</div><div id="roundcounter">1</div><div class="playernameright" id="playernameblack">a</div></div>
-      <div id="gamefield"><div class="field fieldleft" id="fieldwhite"></div><div class="field fieldright" id="fieldblack"></div></div>
+      <div id="gamefield">
+        <div class="field fieldleft" id="fieldwhite"></div>
+        <div class="field fieldright" id="fieldblack"></div>
+      </div>
       <div id="handcards"></div>
     </div>
     <div id="debugcontrols"></div>
