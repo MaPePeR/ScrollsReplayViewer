@@ -3,11 +3,28 @@
 (function (exports) {
     "use strict";
 
+    function generateResourcesFromAssets(element, assets) {
+        var rtype, output = "";
+        for (rtype in assets.availableResources) {
+            if (assets.outputResources[rtype] > 0) {
+                output += '<img class="resourceicon" src="http://www.scrollsguide.com/deckbuilder/img/' + rtype.toLowerCase() + '.png"/>' + assets.availableResources[rtype] + '/' + assets.outputResources[rtype] + '<br/>';
+            }
+        }
+        output += '<span style="clear: both">Handsize: ' + assets.handSize + '</span>';
+        element.html(output);
+    }
     var effectHandler = {
         "TurnBegin": function (e) {
             $("#roundcounter").text(e.turn);
             $("#playernamewhite, #playernameblack").removeClass("playernameactive");
             $("#playername" + e.color).addClass("playernameactive");
+        },
+        "ResourcesUpdate": function (e) {
+            generateResourcesFromAssets($("#resourceswhite"), e.whiteAssets);
+            generateResourcesFromAssets($("#resourcesblack"), e.blackAssets);
+        },
+        "IdolUpdate": function (e) {
+            $("#" + e.idol.color + "idol" + e.idol.position).text(e.idol.hp);
         }
     };
 
