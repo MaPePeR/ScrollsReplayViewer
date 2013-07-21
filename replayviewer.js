@@ -41,6 +41,7 @@ $(function () {
             if (replayreader.getPerspective() === "black") {
                 $("#fieldwhite, #fieldblack").toggleClass("fieldleft fieldright");
                 $("#playernamewhite, #playernameblack").toggleClass("playernameleft playernameright");
+                $("#resourceswhite, #resourcesblack").toggleClass("playerresourcesright playerresourcesleft");
             }
         });
     }
