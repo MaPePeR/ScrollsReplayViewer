@@ -13,11 +13,11 @@
 
     function playEffect(effect) {
         var key, handler;
-        for (key in effectHandler) {
-            if (effect[key] && handler === undefined) {
+        for (key in effect) {
+            if (effectHandler[key] !== undefined && handler === undefined) {
                 handler = effectHandler[key];
                 handler(effect[key]);
-            } else if (handler !== undefined) {
+            } else if (effectHandler[key] !== undefined && handler !== undefined) {
                 console.log("Handlers are ambigious!");
                 //Make this an error
             }
