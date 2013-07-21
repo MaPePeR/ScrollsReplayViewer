@@ -45,15 +45,12 @@ $(testHandCards);
 
 function handleNextMessageTest() {
     "use strict";
-    var currentRessources;
     function handleNextMessage() {
         var m = replayreader.getNextMessage();
-        if (m.msg === "ActiveResources") {
-            currentRessources = m.types;
-        } else if(m.msg === "NewEffects") {
-
+        while (m.msg === "CardInfo") {
+            m = replayreader.getNextMessage();
         }
-        console.log(m);
+        console.log(JSON.stringify(m));
     }
     var but = $("<input type='button' value='next!'></input");
     but.on('click', handleNextMessage);
