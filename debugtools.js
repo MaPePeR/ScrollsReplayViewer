@@ -1,5 +1,5 @@
 /*jslint vars: true*/
-/*global replayreader, $:false*/
+/*global replayreader, effects, $:false*/
 function fillBoard() {
     "use strict";
     // width/height = 16/15
@@ -51,6 +51,7 @@ function handleNextMessageTest() {
             m = replayreader.getNextMessage();
         }
         console.log(JSON.stringify(m));
+        effects.readMessage(m);
     }
     var but = $("<input type='button' value='next!'></input");
     but.on('click', handleNextMessage);

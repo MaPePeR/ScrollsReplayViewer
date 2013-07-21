@@ -4,6 +4,7 @@
     <script type="text/javascript" src="replayreader.js"></script>
     <script type="text/javascript" src="replayviewer.js"></script>
     <script type="text/javascript" src="debugtools.js"></script>
+    <script type="text/javascript" src="effects.js"></script>
     <style type="text/css">
     #game {
       resize:both;
@@ -42,9 +43,8 @@
       text-align: left;
       padding-left: 2em;
     }
-    .playername {
-      width: 200px;
-      font-size: 14px;
+    .playernameactive {
+      font-weight: bold;
     }
     .field {
       position: absolute;
@@ -91,7 +91,6 @@
       width: 7em;
       overflow: auto;
       resize: none;
-
     }
     .playerresourcesleft {
       text-align: left;
