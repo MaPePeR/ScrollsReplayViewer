@@ -35,6 +35,13 @@ $(function () {
         var fileR = document.getElementById("replayfileR").files[0];
         replayreader.init(fileL, fileR, function () {
             $("#replaychooser").hide();
+            $("#playernamewhite").text(replayreader.getWhiteName());
+            $("#playernameblack").text(replayreader.getBlackName());
+            //Default: white player on the left. when perspective is 'black': swap postions of GUI elements
+            if (replayreader.getPerspective() === "black") {
+                $("#fieldwhite, #fieldblack").toggleClass("fieldleft fieldright");
+                $("#playernamewhite, #playernameblack").toggleClass("playernameleft playernameright");
+            }
         });
     }
     $("#playButton").on('click', readFiles);
