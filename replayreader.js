@@ -92,6 +92,14 @@
     }
 
     var headers;
+    function readActiveResources(color, rreader) {
+        var m = rreader.nextMessage();
+        if (m.msg !== "ActiveResources") {
+            throw "illegal packet";
+        }
+        headers[color + 'Resources'] = m.types;
+    }
+
     exports.init = function (fileL, fileR, callback) {
         if (fileL !== undefined && fileR !== undefined) {
             //2 Replays - Merge!
@@ -103,6 +111,7 @@
             getReaderForFile(fileL, function (reader) {
                 singleReplayReader = reader;
                 headers = reader.getHeaders();
+                readActiveResources(headers.perspective, reader);
                 callback();
             });
         } else if (fileR !== undefined) {
@@ -110,6 +119,7 @@
             getReaderForFile(fileR, function (reader) {
                 singleReplayReader = reader;
                 headers = reader.getHeaders();
+                readActiveResources(headers.perspective, reader);
                 //The User want's to see the loaded replay on the right side:
                 headers.perspective = invertColor(headers.perspective);
                 callback();
@@ -128,5 +138,11 @@
     };
     exports.getPerspective = function () {
         return headers.perspective;
+    };
+    exports.getWhiteRessources = function () {
+        return headers.whiteResources;
+    };
+    exports.getBlackRessources = function () {
+        return headers.blackResources;
     };
 }(this.replayreader = {}));
