@@ -91,21 +91,6 @@
         return m;
     }
 
-    function readHeaders(rreader) {
-        /*Read the header messages: ServerInfo, GameInfo*/
-        var o = {};
-        var m = rreader.nextMessage();
-        if (m.msg !== "ServerInfo") {
-            throw "can not read ServerInfo from Replay";
-        }
-        o.version = m.version;
-        m = rreader.nextMessage();
-        if (m.msg !== "GameInfo") {
-            throw "No GameInfo?!";
-        }
-
-
-    }
     var headers;
     exports.init = function (fileL, fileR, callback) {
         if (fileL !== undefined && fileR !== undefined) {
