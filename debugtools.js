@@ -14,9 +14,9 @@ function fillBoard() {
     for (y = 0; y < 5; y += 1) {
         isBackRow = y % 2 === 1;
         idolW = $('<div class="idol" id="whiteidol' + y + '">20</div>');
-        idolW.height(height / 5).width(width / 8).css('top', y * height / 5).css('left', 0);
+        idolW.height(height / 5).width(width / 8).css('top', y * height / 5);
         idolB = $('<div class="idol" id="blackidol' + y + '">20</div>');
-        idolB.height(height / 5).width(width / 8).css('top', y * height / 5).css('right', 0);
+        idolB.height(height / 5).width(width / 8).css('top', y * height / 5);
         for (x = 0; x < 3; x += 1) {
             scrollW = $('<img class="fieldscroll" src="http://www.scrollsguide.com/app/low_res/810.png">');
             scrollW.width(width / 4).css('top', y * height / 5).css('left', (isBackRow ? width / 8 : width / 4) + x * width / 4);
