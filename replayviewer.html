@@ -79,11 +79,33 @@
     .fieldright .idol {
       right: 0px;
     }
-    #handcards {
+    #botrow {
       position: absolute;
       bottom: 0;
       width: 100%;
       height: 22%;
+    }
+    .playerresources {
+      position: absolute;
+      height: 100%;
+      width: 7em;
+      overflow: auto;
+      resize: none;
+
+    }
+    .playerresourcesleft {
+      text-align: left;
+      left: 0%;
+    }
+    .playerresourcesright {
+      text-align: right;
+      right: 0%;
+    }
+    #handcards {
+      position: absolute;
+      left: 7em;
+      right: 7em;
+      height: 100%;
       background-color: green;
       text-align: center;
       white-space: nowrap;
@@ -118,7 +140,11 @@
         <div class="field fieldleft" id="fieldwhite"></div>
         <div class="field fieldright" id="fieldblack"></div>
       </div>
-      <div id="handcards"></div>
+      <div id="botrow">
+        <div class="playerresources playerresourcesleft" id="resourceswhite">whh</div>
+        <div class="playerresources playerresourcesright" id="resourcesblack">rhh</div>
+        <div id="handcards"></div>
+      </div>
     </div>
     <div id="debugcontrols"></div>
   </body>
