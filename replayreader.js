@@ -125,6 +125,8 @@
             getReaderForFile(fileR, function (reader) {
                 singleReplayReader = reader;
                 headers = reader.getHeaders();
+                //The User want's to see the loaded replay on the right side:
+                headers.perspective = invertColor(headers.perspective);
                 callback();
             });
         }
@@ -133,11 +135,11 @@
         throw "Not yet initialised! No replays loaded!";
     };
 
-    exports.getLName = function () {
-        return headers[headers.perspective];
+    exports.getWhiteName = function () {
+        return headers.white;
     };
-    exports.getRName = function () {
-        return headers[invertColor(headers.perspective)];
+    exports.getBlackName = function () {
+        return headers.black;
     };
     exports.getPerspective = function () {
         return headers.perspective;
