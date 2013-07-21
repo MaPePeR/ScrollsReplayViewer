@@ -6,14 +6,31 @@ from urllib.parse import urlencode
 import json
 import time
 
-folder = './images/'
-if not exists(folder):
-    os.makedirs(folder)
+scrollImageFolder = './scrollimages/'
+if not exists(scrollImageFolder):
+    os.makedirs(scrollImageFolder)
+
+mainImageFolder = './mainimages/'
+if not exists(mainImageFolder):
+    os.makedirs(mainImageFolder)
 
 
 def downloadScrollImage(name, file):
     url = "http://a.scrollsguide.com/image/screen?{0}".format(urlencode({"name": name}))
     print("Downloading {0} to {1}".format(url, file))
+    req = urlopen(url)
+    with open(file, 'wb') as fp:
+        while True:
+            chunk = req.read(1000)
+            if not chunk:
+                break
+            fp.write(chunk)
+    req.close()
+
+
+def downloadMainImage(id, file):
+    url = "http://www.scrollsguide.com/app/low_res/{0}.png".format(id)
+    print("Downloading Image-{0} to {1}".format(id, file))
     req = urlopen(url)
     with open(file, 'wb') as fp:
         while True:
@@ -36,10 +53,17 @@ if scrollsData['msg'] != 'success':
 scrollsData = scrollsData['data']
 
 for scroll in scrollsData:
-    pathForFile = "{0}{1}.png".format(folder, scroll['id'])
-    if exists(pathForFile):
-        print("Skipping ID: {0} Name: {1}".format(scroll['id'], scroll['name']))
+    pathForScrollImage = "{0}{1}.png".format(scrollImageFolder, scroll['id'])
+    pathForMainImage = "{0}{1}.png".format(mainImageFolder, scroll['image'])
+    if exists(pathForScrollImage):
+        print("Skipping Scroll-ID: {0} Name: {1}".format(scroll['id'], scroll['name']))
     else:
         print("Downloading ID: {0} Name: {1}".format(scroll['id'], scroll['name']))
-        downloadScrollImage(scroll['name'], pathForFile)
-        time.sleep(10)
+        downloadScrollImage(scroll['name'], pathForScrollImage)
+        time.sleep(5)
+    if exists(pathForMainImage):
+        print("Skipping Main-Image: {0} Name: {1}".format(scroll['image'], scroll['name']))
+    else:
+        print("Downloading Image-ID: {0} Name: {1}".format(scroll['image'], scroll['name']))
+        downloadMainImage(scroll['image'], pathForMainImage)
+        time.sleep(5)
