@@ -8,6 +8,25 @@ if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 //global:
 $(function () {
     "use strict";
+
+    function generateIdols() {
+        var idolW, idolB;
+        var fw = $('#fieldwhite');
+        var fb = $('#fieldblack');
+        var width = fw.width(), height = fw.height(), y;
+        width  = Math.min(width, 16 * height / 15);
+        height = Math.min(height, 15 * width / 16);
+        for (y = 0; y < 5; y += 1) {
+            idolW = $('<div class="idol" id="whiteidol' + y + '">20</div>');
+            idolW.height(height / 5).width(width / 8).css('top', y * height / 5);
+            idolB = $('<div class="idol" id="blackidol' + y + '">20</div>');
+            idolB.height(height / 5).width(width / 8).css('top', y * height / 5);
+            fw.append(idolW);
+            fb.append(idolB);
+        }
+    }
+    generateIdols();
+
     var filenamePattern = /\.s[gp]r$/; //For ScrollsGuide(.sgr) and ScrollsPost(.spr)-Replays
     function validateReplayFiles() {
         var fileL = $("#replayfileL").val() || "";
