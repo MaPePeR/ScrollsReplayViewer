@@ -9,29 +9,40 @@
     var currentHandCards = [], currentHandCardsElem = [];
     var lastDepleteAction;
     var possibleDepleteActions = {
-        "SacGROWTH": function () {
+        //Disabled until implemented
+        /*"SacGROWTH": function (elem) {
 
         },
-        "SacORDER": function () {
+        "SacORDER": function (elem) {
 
         },
-        "SacENERGY": function () {
+        "SacENERGY": function (elem) {
 
         },
-        "SacCards": function () {
+        "SacCards": function (elem) {
 
         },
-        "CardPlayed": function () {
+        "CardPlayed": function (elem) {
 
-        }
+        }*/
 
     };
 
     function arrayRemove(array, index) {
         return array.splice(index, 1);
     }
+    function removeThis() {
+        $(this).remove();
+    }
 
     function removeCard(index) {
+        if (lastDepleteAction !== undefined && lastDepleteAction in possibleDepleteActions) {
+            possibleDepleteActions[lastDepleteAction](currentHandCardsElem[index]);
+        } else {
+            currentHandCardsElem[index].hide('slow', removeThis);
+        }
+        arrayRemove(currentHandCards, index);
+        arrayRemove(currentHandCardsElem, index);
     }
 
     function addCard(card) {
