@@ -11,6 +11,7 @@ var board;
 
 $.getJSON("http://a.scrollsguide.com/scrolls?norules", function (data) {
     "use strict";
+    //TODO: refactor the data, so it can be used by images.js
     scrollsData = data;
 });
 
