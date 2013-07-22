@@ -40,11 +40,15 @@ function handleNextMessageTest() {
     "use strict";
     function handleNextMessage() {
         var m = replayreader.getNextMessage();
-        while (m.msg === "CardInfo") {
+        while (m.msg === "CardInfo" || m.msg === "AbilityInfo") {
             m = replayreader.getNextMessage();
         }
         console.log(JSON.stringify(m));
-        effects.readMessage(m);
+        if (m.msg === "NewEffects") {
+            effects.readMessage(m);
+        } else {
+            console.log("Unhandled Message: ", m);
+        }
     }
     var but = $("<input type='button' value='next!'></input");
     but.on('click', handleNextMessage);
