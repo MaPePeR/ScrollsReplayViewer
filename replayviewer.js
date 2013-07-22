@@ -9,6 +9,31 @@ if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 $(function () {
     "use strict";
 
+    //Multi-dimensional array initialiser - thanks to http://stackoverflow.com/questions/966225/how-can-i-create-a-two-dimensional-array-in-javascript/966938#966938
+    function createArray(length) {
+        var arr = new Array(length || 0),
+            i = length;
+
+        if (arguments.length > 1) {
+            var args = Array.prototype.slice.call(arguments, 1);
+            while(i--) arr[length-1 - i] = createArray.apply(this, args);
+        }
+
+        return arr;
+    }
+
+    function emptyBoard() {
+        return {
+            "whitefield": createArray(5, 3),
+            "blackfield": createArray(5, 3),
+            "blackIdols": createArray(5),
+            "whiteIdols": createArray(5),
+            "lastwidth": 0,
+            "lastheight": 0
+        };
+    }
+
+    var board = emptyBoard();
     function generateIdols() {
         var idolW, idolB;
         var fw = $('#fieldwhite');
@@ -16,12 +41,16 @@ $(function () {
         var width = fw.width(), height = fw.height(), y;
         width  = Math.min(width, 16 * height / 15);
         height = Math.min(height, 15 * width / 16);
+
         for (y = 0; y < 5; y += 1) {
             idolW = $('<div class="idol" id="whiteidol' + y + '">20</div>');
             idolW.height(height / 5).width(width / 8).css('top', y * height / 5);
+            board.whiteIdols[y] = idolW;
+            fw.append(idolW);
+
             idolB = $('<div class="idol" id="blackidol' + y + '">20</div>');
             idolB.height(height / 5).width(width / 8).css('top', y * height / 5);
-            fw.append(idolW);
+            board.blackIdols[y] = idolB;
             fb.append(idolB);
         }
     }
