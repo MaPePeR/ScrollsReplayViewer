@@ -1,5 +1,5 @@
 /*jslint browser: true, vars: true*/
-/*global images, $: false*/
+/*global images, $, replayreader: false*/
 
 
 //Handcards module - assumes, that cards are always added to the right.
@@ -7,24 +7,25 @@
     "use strict";
 
     var currentHandCards = [], currentHandCardsElem = [];
-    var lastDepleteAction;
+    var lastDepleteAction, lastDepleteColor;
+
+    function createSacFunctionFor(resource) {
+        return function (elem) {
+            //TODO: create resouce-icon and move it to the corresponding resource-div
+            elem.hide();
+        };
+    }
+
     var possibleDepleteActions = {
-        //Disabled until implemented
-        /*"SacGROWTH": function (elem) {
-
-        },
-        "SacORDER": function (elem) {
-
-        },
-        "SacENERGY": function (elem) {
-
-        },
+        "SacGROWTH": createSacFunctionFor('GROWTH'),
+        "SacORDER": createSacFunctionFor('ORDER'),
+        "SacENERGY": createSacFunctionFor('ENERGY'),
         "SacCards": function (elem) {
 
         },
         "CardPlayed": function (elem) {
 
-        }*/
+        }
 
     };
 
@@ -58,11 +59,12 @@
         }
     }
 
-    exports.setDepleteAction = function (type) {
+    exports.setDepleteAction = function (type, color) {
         if (type !== undefined && type in possibleDepleteActions) {
             lastDepleteAction = type;
+            lastDepleteColor = color;
         } else {
-            throw "not a possible deplete action!";
+            throw "not a possible deplete action: " + type;
         }
     };
 
@@ -123,6 +125,12 @@
         output += '<span style="clear: both">Handsize: ' + assets.handSize + '</span>';
         element.html(output);
     }
+
+    function displayMessage(message) {
+        //TODO: visible message
+        console.log(message);
+    }
+
     var effectHandler = {
         "TurnBegin": function (e) {
             $("#roundcounter").text(e.turn);
@@ -138,6 +146,21 @@
         },
         "HandUpdate": function (e) {
             handcards.handupdate(e.cards);
+        },
+        "CardSacrificed": function (e) {
+            if (replayreader.canSeeHandOfPlayer(e.color)) {
+                if (e.resource !== undefined) {
+                    handcards.setDepleteAction("Sac" + e.resource, e.color);
+                } else {
+                    handcards.setDepleteAction("SacCards", e.color);
+                }
+            } else {
+                if (e.resource !== undefined) {
+                    displayMessage(replayreader.getName(e.color) + " sacrified for " + e.resource);
+                } else {
+                    displayMessage(replayreader.getName(e.color) + " sacrified for Cards");
+                }
+            }
         }
     };
 

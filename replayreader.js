@@ -110,6 +110,8 @@
             getReaderForFile(fileL, function (reader) {
                 singleReplayReader = reader;
                 headers = reader.getHeaders();
+                headers['seeCards' + headers.perspective] = true;
+                headers['seeCards' + invertColor(headers.perspective)] = false;
                 readActiveResources(headers.perspective, reader);
                 callback();
             });
@@ -118,6 +120,8 @@
             getReaderForFile(fileR, function (reader) {
                 singleReplayReader = reader;
                 headers = reader.getHeaders();
+                headers['seeCards' + headers.perspective] = true;
+                headers['seeCards' + invertColor(headers.perspective)] = false;
                 readActiveResources(headers.perspective, reader);
                 //The User want's to see the loaded replay on the right side:
                 headers.perspective = invertColor(headers.perspective);
@@ -143,5 +147,11 @@
     };
     exports.getBlackRessources = function () {
         return headers.blackResources;
+    };
+    exports.canSeeHandOfPlayer = function (color) {
+        return headers['seeCards' + color];
+    };
+    exports.getName = function (color) {
+        return headers[color];
     };
 }(this.replayreader = {}));
