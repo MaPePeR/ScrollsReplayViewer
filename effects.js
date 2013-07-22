@@ -1,5 +1,5 @@
 /*jslint browser: true, vars: true*/
-/*global images, $, replayreader: false*/
+/*global images, $, replayreader, board: false*/
 
 
 //Handcards module - assumes, that cards are always added to the right.
@@ -161,7 +161,17 @@
                     displayMessage(replayreader.getName(e.color) + " sacrified for Cards");
                 }
             }
+        },
+        "SummonUnit": function (e) {
+            var elem = $('<img class="fieldscroll" src="' + images.getMainImageURLForScroll(e.unit.cardTypeId) + '"/>');
+            var width = board.lastwidth, height = board.lastheight, y = parseInt(e.target.position.split(',')[0]), x = parseInt(e.target.position.split(',')[1]);
+            var isBackRow = y % 2 === 1, color = e.target.color;
+            console.log(width, height, isBackRow, color, y, x);
+            elem.width(width / 4).css('top', y * height / 5).css('left', (isBackRow ? width / 8 : width / 4) + x * width / 4);
+            $("#field" + color).append(elem);
+            board[color + 'field'][y][x] = elem;
         }
+        //TODO: SummonUnit, StatsUpdate, CardPlayed
     };
 
     function playEffect(effect) {

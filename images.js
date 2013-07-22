@@ -2,6 +2,18 @@
 (function (exports) {
     "use strict";
     var source = "local", scrollsData;
+
+    $.getJSON("http://a.scrollsguide.com/scrolls?norules", function (data) {
+        scrollsData = {};
+        var scrollindex, scroll; 
+        for (scrollindex in data.data) {
+            scroll = data.data[scrollindex];
+            console.log(scroll)
+            scrollsData[parseInt(scroll.id, 10)] = scroll;
+        }
+        console.log(scrollsData);
+    });
+
     if (source === "local") {
         exports.getScrollImageURL = function (scrollid) {
             return "./scrollimages/" + scrollid + ".png";
@@ -12,10 +24,6 @@
         };
 
     } else if (source === "sg") {
-        $.getJSON("http://a.scrollsguide.com/scrolls?norules", function (data) {
-            //TODO: refactor the data, so it can be used by images.js
-            scrollsData = data.data;
-        });
         exports.getScrollImageURL = function (scrollid) {
             return "http://a.scrollsguide.com/image/screen?name=" + encodeURIComponent(scrollsData[scrollid].name) + "&size=small";
         };
