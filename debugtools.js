@@ -23,7 +23,7 @@ function fillBoard() {
         }
     }
 }
-$(fillBoard);
+//$(fillBoard);
 
 function testHandCards() {
     "use strict";
@@ -34,7 +34,7 @@ function testHandCards() {
     });
     $("#debugcontrols").append(but);
 }
-$(testHandCards);
+//$(testHandCards);
 
 function handleNextMessageTest() {
     "use strict";
