@@ -6,6 +6,14 @@ if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 }
 
 //global:
+var scrollsData;
+var board;
+
+$.getJson("http://a.scrollsguide.com/scrolls?norules", function (data) {
+    "use strict";
+    scrollsData = data;
+});
+
 $(function () {
     "use strict";
 
@@ -28,17 +36,17 @@ $(function () {
             "blackfield": createArray(5, 3),
             "blackIdols": createArray(5),
             "whiteIdols": createArray(5),
-            "lastwidth": 0,
-            "lastheight": 0
+            "lastwidth": $('#fieldwhite').width(),
+            "lastheight": $('#fieldwhite').height()
         };
     }
 
-    var board = emptyBoard();
+    board = emptyBoard();
     function generateIdols() {
         var idolW, idolB;
         var fw = $('#fieldwhite');
         var fb = $('#fieldblack');
-        var width = fw.width(), height = fw.height(), y;
+        var width = board.lastwidth, height = board.lastheight, y;
         width  = Math.min(width, 16 * height / 15);
         height = Math.min(height, 15 * width / 16);
 
