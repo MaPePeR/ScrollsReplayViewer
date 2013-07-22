@@ -1,4 +1,87 @@
+/*jslint vars: true*/
 /*global $: false*/
+
+
+//Handcards module - assumes, that cards are always added to the right.
+(function (exports) {
+    "use strict";
+
+    var currentHandCards = [], currentHandCardsElem = [];
+    var lastDepleteAction;
+    var possibleDepleteActions = {
+        "SacGROWTH": function () {
+
+        },
+        "SacORDER": function () {
+
+        },
+        "SacENERGY": function () {
+
+        },
+        "SacCards": function () {
+
+        },
+        "CardPlayed": function () {
+
+        }
+
+    };
+
+    function arrayRemove(array, index) {
+        return array.splice(index, 1);
+    }
+
+    function removeCard(index) {
+    }
+
+    function addCard(card) {
+
+    }
+
+    exports.setDepleteAction = function (type) {
+        if (type !== undefined && type in possibleDepleteActions) {
+            lastDepleteAction = type;
+        } else {
+            throw "not a possible deplete action!";
+        }
+    };
+
+    exports.handupdate = function (cards) {
+        //Diffing the hands
+        var indexCurrent, indexNew = 0, cardsToRemove = [], cardsToAdd = [], i;
+
+        for (indexCurrent = 0; indexCurrent < currentHandCards.length && indexNew < cards.length; indexCurrent += 1) {
+            if (currentHandCards[indexCurrent].typeId !== cards[indexNew].typeId) {
+                cardsToRemove.push(indexCurrent);
+            } else {
+                indexNew += 1;
+            }
+        }
+
+        //New cards are added.
+        while (indexNew < cards.length) {
+            cardsToAdd.push(cards[indexNew]);
+            indexNew += 1;
+        }
+
+        //Cards are removed from the right side
+        while (indexCurrent < currentHandCards.length) {
+            cardsToRemove.add(currentHandCards[indexCurrent]);
+            indexCurrent += 1;
+        }
+
+        for (i = 0; i < cardsToRemove.length; i += 1) {
+            removeCard(cardsToRemove[i]);
+        }
+
+        for (i = 0; i < cardsToAdd.length; i += 1) {
+            addCard(cardsToAdd[i]);
+        }
+
+        currentHandCards = cards;
+    };
+}(this.handcards = {}));
+
 //Effects module to handle NewEffect-Messages
 (function (exports) {
     "use strict";
@@ -25,6 +108,9 @@
         },
         "IdolUpdate": function (e) {
             $("#" + e.idol.color + "idol" + e.idol.position).text(e.idol.hp);
+        },
+        "HandUpdate": function (e) {
+            handcards.handupdate(e.cards);
         }
     };
 
