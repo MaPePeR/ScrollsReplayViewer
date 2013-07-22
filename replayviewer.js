@@ -6,14 +6,9 @@ if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 }
 
 //global:
-var scrollsData;
 var board;
 
-$.getJSON("http://a.scrollsguide.com/scrolls?norules", function (data) {
-    "use strict";
-    //TODO: refactor the data, so it can be used by images.js
-    scrollsData = data;
-});
+
 
 $(function () {
     "use strict";
