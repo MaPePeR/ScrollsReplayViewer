@@ -1,5 +1,5 @@
-/*jslint vars: true*/
-/*global $: false*/
+/*jslint browser: true, vars: true*/
+/*global images, $: false*/
 
 
 //Handcards module - assumes, that cards are always added to the right.
@@ -31,22 +31,31 @@
     function arrayRemove(array, index) {
         return array.splice(index, 1);
     }
-    function removeThis() {
-        $(this).remove();
-    }
 
     function removeCard(index) {
         if (lastDepleteAction !== undefined && lastDepleteAction in possibleDepleteActions) {
             possibleDepleteActions[lastDepleteAction](currentHandCardsElem[index]);
         } else {
-            currentHandCardsElem[index].hide('slow', removeThis);
+            currentHandCardsElem[index].hide('slow');
         }
         arrayRemove(currentHandCards, index);
         arrayRemove(currentHandCardsElem, index);
     }
 
     function addCard(card) {
+        var elem = $('<img class="handscroll" src="' + images.getScrollImageURL(card.typeId) + '"/>');
+        elem.hide();
+        $("#handcards").append(elem);
+        currentHandCards.push(card);
+        currentHandCardsElem.push(elem);
+    }
 
+    function moveCards() {
+        var i, width = $('#handcards').width();
+
+        for (i = 0; i < currentHandCardsElem.length; i += 1) {
+            currentHandCardsElem[i].css('left', i * width / currentHandCardsElem.length).show();
+        }
     }
 
     exports.setDepleteAction = function (type) {
@@ -59,11 +68,12 @@
 
     exports.handupdate = function (cards) {
         //Diffing the hands
-        var indexCurrent, indexNew = 0, cardsToRemove = [], cardsToAdd = [], i;
+        var indexCurrent, indexNew = 0, cardsToRemove = [], elemsToRemove = [], cardsToAdd = [], i;
 
         for (indexCurrent = 0; indexCurrent < currentHandCards.length && indexNew < cards.length; indexCurrent += 1) {
             if (currentHandCards[indexCurrent].typeId !== cards[indexNew].typeId) {
                 cardsToRemove.push(indexCurrent);
+                elemsToRemove.push(currentHandCardsElem[indexCurrent]);
             } else {
                 indexNew += 1;
             }
@@ -77,7 +87,8 @@
 
         //Cards are removed from the right side
         while (indexCurrent < currentHandCards.length) {
-            cardsToRemove.add(currentHandCards[indexCurrent]);
+            cardsToRemove.push(indexCurrent);
+            elemsToRemove.push(currentHandCardsElem[indexCurrent]);
             indexCurrent += 1;
         }
 
@@ -89,7 +100,12 @@
             addCard(cardsToAdd[i]);
         }
 
-        currentHandCards = cards;
+        $(".handscroll").promise().done(function () {
+            moveCards();
+            for (i = elemsToRemove.length - 1; i >= 0; i -= 1) {
+                elemsToRemove[i].remove();
+            }
+        });
     };
 }(this.handcards = {}));
 
