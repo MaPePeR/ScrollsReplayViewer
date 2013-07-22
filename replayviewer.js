@@ -9,7 +9,7 @@ if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
 var scrollsData;
 var board;
 
-$.getJson("http://a.scrollsguide.com/scrolls?norules", function (data) {
+$.getJSON("http://a.scrollsguide.com/scrolls?norules", function (data) {
     "use strict";
     scrollsData = data;
 });
@@ -32,6 +32,8 @@ $(function () {
 
     function emptyBoard() {
         return {
+            "whitefieldElem": $('#fieldwhite'),
+            "blackfieldElem": $('#fieldblack'),
             "whitefield": createArray(5, 3),
             "blackfield": createArray(5, 3),
             "blackIdols": createArray(5),
@@ -44,8 +46,8 @@ $(function () {
     board = emptyBoard();
     function generateIdols() {
         var idolW, idolB;
-        var fw = $('#fieldwhite');
-        var fb = $('#fieldblack');
+        var fw = board.whitefieldElem;
+        var fb = board.blackfieldElem;
         var width = board.lastwidth, height = board.lastheight, y;
         width  = Math.min(width, 16 * height / 15);
         height = Math.min(height, 15 * width / 16);
