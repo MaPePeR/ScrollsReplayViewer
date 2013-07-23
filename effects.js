@@ -183,6 +183,7 @@
             elem.children('.attack').val(e.ap);
             elem.children('.countdown').val(e.ac);
             elem.children('.health').val(e.hp);
+            //TODO: Handle e.buffs
         },
         "MoveUnit": function (e) {
             var fromPos = getPosition(e.from.position), toPos = getPosition(e.to.position);
@@ -197,6 +198,13 @@
             elem.animate(animateCss);
             //elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
 
+        }, 
+        "RemoveUnit": function (e) {
+            var p = getPosition(e.tile.position), elem = board[e.tile.color + 'field'][p.y][p.x];
+            elem.hide(function () {
+                $(this).remove();
+            });
+            board[e.tile.color + 'field'][p.y][p.x] = undefined;
         }
         //TODO: CardPlayed
     };
