@@ -11,8 +11,15 @@
 
     function createSacFunctionFor(resource) {
         return function (elem) {
-            //TODO: create resouce-icon and move it to the corresponding resource-div
-            elem.hide();
+            var animateElem = $('<img style="position: absolute" src="http://www.scrollsguide.com/deckbuilder/img/' + resource.toLowerCase() + '.png"/>').width(elem.width() / 2);
+            var animLayer = $("#animationlayer");
+            animLayer.append(animateElem);
+            animateElem.css('top', elem.offset().top - animLayer.offset().top).css('left', elem.offset().left - animLayer.offset().left);
+            elem.hide('slow', function () {
+                animateElem.animate({'left': $('#resources' + lastDepleteColor).offset().left - animLayer.offset().left}, function () {
+                    $(this).remove();
+                });
+            });
         };
     }
 
@@ -21,10 +28,10 @@
         "SacORDER": createSacFunctionFor('ORDER'),
         "SacENERGY": createSacFunctionFor('ENERGY'),
         "SacCards": function (elem) {
-
+            elem.hide();
         },
         "CardPlayed": function (elem) {
-
+            elem.hide();
         }
 
     };
@@ -36,6 +43,7 @@
     function removeCard(index) {
         if (lastDepleteAction !== undefined && lastDepleteAction in possibleDepleteActions) {
             possibleDepleteActions[lastDepleteAction](currentHandCardsElem[index]);
+            lastDepleteAction = undefined;
         } else {
             currentHandCardsElem[index].hide('slow');
         }

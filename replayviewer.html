@@ -156,7 +156,11 @@
       bottom: 0px;
     }
 
-
+    #animationlayer {
+      position: absolute;
+      left: 0px;top: 0px; width: 0px; height: 0px;
+      z-index: 100;
+    }
     </style>
   </head>
   <body>
@@ -182,6 +186,7 @@
         <div class="playerresources playerresourcesright" id="resourcesblack"></div>
         <div id="handcards"></div>
       </div>
+      <div id="animationlayer"></div>
     </div>
     <div id="debugcontrols" style="position: absolute; top: 0; left: 0; right: 0;"></div>
   </body>
