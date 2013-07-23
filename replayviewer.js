@@ -49,12 +49,12 @@ $(function () {
         height = Math.min(height, 15 * width / 16);
 
         for (y = 0; y < 5; y += 1) {
-            idolW = $('<div class="idol" id="whiteidol' + y + '">20</div>');
+            idolW = $('<div class="idol" id="whiteidol' + y + '"></div>');
             idolW.height(height / 5).width(width / 8).css('top', y * height / 5);
             board.whiteIdols[y] = idolW;
             fw.append(idolW);
 
-            idolB = $('<div class="idol" id="blackidol' + y + '">20</div>');
+            idolB = $('<div class="idol" id="blackidol' + y + '"></div>');
             idolB.height(height / 5).width(width / 8).css('top', y * height / 5);
             board.blackIdols[y] = idolB;
             fb.append(idolB);
@@ -89,6 +89,7 @@ $(function () {
         var fileR = document.getElementById("replayfileR").files[0];
         replayreader.init(fileL, fileR, function () {
             $("#replaychooser").hide();
+            $("#game").show();
             $("#playernamewhite").text(replayreader.getWhiteName());
             $("#playernameblack").text(replayreader.getBlackName());
             //Default: white player on the left. when perspective is 'black': swap postions of GUI elements
