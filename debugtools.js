@@ -38,6 +38,7 @@ function testHandCards() {
 
 function handleNextMessageTest() {
     "use strict";
+    var but = $("<input type='button' value='next!'></input");
     function handleNextMessage() {
         var m = replayreader.getNextMessage();
         while (m.msg === "CardInfo" || m.msg === "AbilityInfo") {
@@ -45,12 +46,15 @@ function handleNextMessageTest() {
         }
         console.log(JSON.stringify(m));
         if (m.msg === "NewEffects") {
-            effects.readMessage(m);
+            but.attr("disabled", "disabled"); //disable
+            effects.readMessage(m, function () {
+                but.removeAttr("disabled"); //enable when effects ready
+            });
         } else {
             console.log("Unhandled Message: ", m);
         }
     }
-    var but = $("<input type='button' value='next!'></input");
+    
     but.on('click', handleNextMessage);
 
     $("#debugcontrols").append(but);

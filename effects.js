@@ -68,7 +68,7 @@
         }
     };
 
-    exports.handupdate = function (cards) {
+    exports.handupdate = function (cards, callback) {
         //Diffing the hands
         var indexCurrent, indexNew = 0, cardsToRemove = [], elemsToRemove = [], cardsToAdd = [], i;
 
@@ -107,6 +107,9 @@
             for (i = elemsToRemove.length - 1; i >= 0; i -= 1) {
                 elemsToRemove[i].remove();
             }
+            if (callback !== undefined) {
+                callback();
+            }
         });
     };
 }(this.handcards = {}));
@@ -144,16 +147,19 @@
             $("#roundcounter").text(e.turn);
             $("#playernamewhite, #playernameblack").removeClass("playernameactive");
             $("#playername" + e.color).addClass("playernameactive");
+            nextEffect();
         },
         "ResourcesUpdate": function (e) {
             generateResourcesFromAssets($("#resourceswhite"), e.whiteAssets);
             generateResourcesFromAssets($("#resourcesblack"), e.blackAssets);
+            nextEffect();
         },
         "IdolUpdate": function (e) {
             $("#" + e.idol.color + "idol" + e.idol.position).text(e.idol.hp);
+            nextEffect();
         },
         "HandUpdate": function (e) {
-            handcards.handupdate(e.cards);
+            handcards.handupdate(e.cards, nextEffect);
         },
         "CardSacrificed": function (e) {
             if (replayreader.canSeeHandOfPlayer(e.color)) {
@@ -169,6 +175,7 @@
                     displayMessage(replayreader.getName(e.color) + " sacrified for Cards");
                 }
             }
+            nextEffect();
         },
         "SummonUnit": function (e) {
             var elem = $('<div class="fieldscroll"><input type="text" class="attack" disabled/><input type="text" class="countdown" disabled/><input type="text" class="health" disabled/></div>').css('background-image', 'url(' + images.getMainImageURLForScroll(e.unit.cardTypeId) + ')');
@@ -177,6 +184,7 @@
             elem.width(width / 4).height(width * 3 / 4 / 4).css('top', p.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + p.x * width / 4);
             $("#field" + color).append(elem);
             board[color + 'field'][p.y][p.x] = elem;
+            nextEffect();
         },
         "StatsUpdate": function (e) {
             var p = getPosition(e.target.position), elem = board[e.target.color + 'field'][p.y][p.x];
@@ -184,6 +192,7 @@
             elem.children('.countdown').val(e.ac);
             elem.children('.health').val(e.hp);
             //TODO: Handle e.buffs
+            nextEffect();
         },
         "MoveUnit": function (e) {
             var fromPos = getPosition(e.from.position), toPos = getPosition(e.to.position);
@@ -195,7 +204,7 @@
             board[e.from.color + 'field'][fromPos.y][fromPos.x] = undefined;
             var animateCss = {'top': toPos.y * board.lastheight / 5};
             animateCss[replayreader.getPerspective() === e.to.color ? 'left' : 'right'] = (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4; 
-            elem.animate(animateCss);
+            elem.animate(animateCss, nextEffect);
             //elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
 
         }, 
@@ -203,6 +212,7 @@
             var p = getPosition(e.tile.position), elem = board[e.tile.color + 'field'][p.y][p.x];
             elem.hide(function () {
                 $(this).remove();
+                nextEffect();
             });
             board[e.tile.color + 'field'][p.y][p.x] = undefined;
         }
@@ -222,17 +232,34 @@
         }
         if (handler === undefined) {
             console.log("No handler found!");
+            nextEffect();
             //Make this an error
         }
     }
+    var currentEffects = [];
+    var currentCallback = function () {};
+    function nextEffect() {
+        if (currentEffects.length > 0) {
+            setTimeout(function () {
+                var effect = currentEffects.shift();
+                playEffect(effect);
+            }, 1);
+        } else {
+            //All Effects where played
+            currentCallback();
+        }
+    }
 
-    exports.readMessage = function (m) {
+    exports.readMessage = function (m, callback) {
         if (m.msg !== "NewEffects") {
             throw "wrong message type";
         }
-        var i;
-        for (i = 0; i < m.effects.length; i += 1) {
-            playEffect(m.effects[i]);
+        if (currentEffects.length > 0) {
+            throw "effects are still in progress!!!";
+        } else {
+            currentEffects = m.effects;
+            currentCallback = callback;
+            nextEffect();
         }
     };
 }(this.effects = {}));
