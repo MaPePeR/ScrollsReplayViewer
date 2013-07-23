@@ -58,6 +58,7 @@
             currentHandCardsElem[i].css('left', i * width / currentHandCardsElem.length).show();
         }
     }
+    exports.moveCards = moveCards;
 
     exports.setDepleteAction = function (type, color) {
         if (type !== undefined && type in possibleDepleteActions) {

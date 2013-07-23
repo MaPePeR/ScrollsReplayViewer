@@ -39,6 +39,27 @@ $(function () {
         };
     }
 
+    function calcSize() {
+        console.log('resize!');
+        var y, x;
+        var width = (board.lastwidth = $('#fieldwhite').width());
+        var height = (board.lastheight = $('#fieldwhite').height());
+        for (y = 0; y < 5; y += 1) {
+            for (x = 0; x < 3; x += 1) {
+                if (board.whitefield[y][x] !== undefined) {
+                    board.whitefield[y][x].width(width / 4).height(width * 3 / 4 / 4).css('top', y * height / 5).css(replayreader.getPerspective() === 'white' ? 'left' : 'right', (y % 2 === 1 ? width / 8 : width / 4) + x * width / 4);
+                }
+                if (board.blackfield[y][x] !== undefined) {
+                    board.blackfield[y][x].width(width / 4).height(width * 3 / 4 / 4).css('top', y * height / 5).css(replayreader.getPerspective() === 'black' ? 'left' : 'right', (y % 2 === 1 ? width / 8 : width / 4) + x * width / 4);
+                }
+            }
+            board.blackIdols[y].height(height / 5).width(width / 8).css('top', y * height / 5);
+            board.whiteIdols[y].height(height / 5).width(width / 8).css('top', y * height / 5);
+        }
+        handcards.moveCards();
+    };
+    $(window).resize(calcSize);
+
     board = emptyBoard();
     function generateIdols() {
         var idolW, idolB;
@@ -90,6 +111,7 @@ $(function () {
         replayreader.init(fileL, fileR, function () {
             $("#replaychooser").hide();
             $("#game").show();
+            calcSize();
             $("#playernamewhite").text(replayreader.getWhiteName());
             $("#playernameblack").text(replayreader.getBlackName());
             //Default: white player on the left. when perspective is 'black': swap postions of GUI elements
