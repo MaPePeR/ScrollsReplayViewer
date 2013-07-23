@@ -184,6 +184,15 @@
             elem.children('.attack').val(e.ap);
             elem.children('.countdown').val(e.ac);
             elem.children('.health').val(e.hp);
+        },
+        "MoveUnit": function (e) {
+            var fromPos = getPosition(e.from.position), toPos = getPosition(e.to.position);
+            var elem = board[e.from.color + 'field'][fromPos.y][fromPos.x];
+            board[e.to.color + 'field'][toPos.y][toPos.x] = elem;
+            board[e.from.color + 'field'][fromPos.y][fromPos.x] = undefined;
+            elem.css('top', toPos.y * board.lastheight / 5).css('left', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
+            //TODO: flip positions based on board-side
+
         }
         //TODO: CardPlayed
     };
