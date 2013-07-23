@@ -174,7 +174,6 @@
             var elem = $('<div class="fieldscroll"><input type="text" class="attack" disabled/><input type="text" class="countdown" disabled/><input type="text" class="health" disabled/></div>').css('background-image', 'url(' + images.getMainImageURLForScroll(e.unit.cardTypeId) + ')');
             var width = board.lastwidth, height = board.lastheight, p = getPosition(e.target.position);
             var isBackRow = p.y % 2 === 1, color = e.target.color;
-            //TODO: flip positions based on board-side
             elem.width(width / 4).height(width * 3 / 4 / 4).css('top', p.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + p.x * width / 4);
             $("#field" + color).append(elem);
             board[color + 'field'][p.y][p.x] = elem;
@@ -193,8 +192,10 @@
             }
             board[e.to.color + 'field'][toPos.y][toPos.x] = elem;
             board[e.from.color + 'field'][fromPos.y][fromPos.x] = undefined;
-            elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
-            //TODO: flip positions based on board-side
+            var animateCss = {'top': toPos.y * board.lastheight / 5};
+            animateCss[replayreader.getPerspective() === e.to.color ? 'left' : 'right'] = (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4; 
+            elem.animate(animateCss);
+            //elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
 
         }
         //TODO: CardPlayed
