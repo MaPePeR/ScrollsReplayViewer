@@ -134,7 +134,7 @@
     function getPosition(positionString) {
         var b = positionString.split(',');
         return {
-            'x': parseInt(b[1], 10),
+            'x': 2 - parseInt(b[1], 10),
             'y': parseInt(b[0], 10)
         };
     }
@@ -175,7 +175,7 @@
             var width = board.lastwidth, height = board.lastheight, p = getPosition(e.target.position);
             var isBackRow = p.y % 2 === 1, color = e.target.color;
             //TODO: flip positions based on board-side
-            elem.width(width / 4).height(width * 3 / 4 / 4).css('top', p.y * height / 5).css('left', (isBackRow ? width / 8 : width / 4) + p.x * width / 4);
+            elem.width(width / 4).height(width * 3 / 4 / 4).css('top', p.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + p.x * width / 4);
             $("#field" + color).append(elem);
             board[color + 'field'][p.y][p.x] = elem;
         },
@@ -188,9 +188,12 @@
         "MoveUnit": function (e) {
             var fromPos = getPosition(e.from.position), toPos = getPosition(e.to.position);
             var elem = board[e.from.color + 'field'][fromPos.y][fromPos.x];
+            if (e.to.color !== e.from.color) {
+                throw "moving units across boards is not yet implemented";
+            }
             board[e.to.color + 'field'][toPos.y][toPos.x] = elem;
             board[e.from.color + 'field'][fromPos.y][fromPos.x] = undefined;
-            elem.css('top', toPos.y * board.lastheight / 5).css('left', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
+            elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
             //TODO: flip positions based on board-side
 
         }
