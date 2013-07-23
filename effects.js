@@ -131,6 +131,14 @@
         console.log(message);
     }
 
+    function getPosition(positionString) {
+        var b = positionString.split(',');
+        return {
+            'x': parseInt(b[1], 10),
+            'y': parseInt(b[0], 10)
+        };
+    }
+
     var effectHandler = {
         "TurnBegin": function (e) {
             $("#roundcounter").text(e.turn);
@@ -163,16 +171,21 @@
             }
         },
         "SummonUnit": function (e) {
-            var elem = $('<div class="fieldscroll"></div>').css('background-image', 'url(' + images.getMainImageURLForScroll(e.unit.cardTypeId) + ')');
-            var width = board.lastwidth, height = board.lastheight, y = parseInt(e.target.position.split(',')[0]), x = parseInt(e.target.position.split(',')[1]);
-            var isBackRow = y % 2 === 1, color = e.target.color;
-            console.log(width, height, isBackRow, color, y, x);
+            var elem = $('<div class="fieldscroll"><input type="text" class="attack" disabled/><input type="text" class="countdown" disabled/><input type="text" class="health" disabled/></div>').css('background-image', 'url(' + images.getMainImageURLForScroll(e.unit.cardTypeId) + ')');
+            var width = board.lastwidth, height = board.lastheight, p = getPosition(e.target.position);
+            var isBackRow = p.y % 2 === 1, color = e.target.color;
             //TODO: flip positions based on board-side
-            elem.width(width / 4).height(width * 3 / 4 / 4).css('top', y * height / 5).css('left', (isBackRow ? width / 8 : width / 4) + x * width / 4);
+            elem.width(width / 4).height(width * 3 / 4 / 4).css('top', p.y * height / 5).css('left', (isBackRow ? width / 8 : width / 4) + p.x * width / 4);
             $("#field" + color).append(elem);
-            board[color + 'field'][y][x] = elem;
+            board[color + 'field'][p.y][p.x] = elem;
+        },
+        "StatsUpdate": function (e) {
+            var p = getPosition(e.target.position), elem = board[e.target.color + 'field'][p.y][p.x];
+            elem.children('.attack').val(e.ap);
+            elem.children('.countdown').val(e.ac);
+            elem.children('.health').val(e.hp);
         }
-        //TODO: SummonUnit, StatsUpdate, CardPlayed
+        //TODO: CardPlayed
     };
 
     function playEffect(effect) {
