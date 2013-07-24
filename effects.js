@@ -225,7 +225,7 @@
             });
             board[e.tile.color + 'field'][p.y][p.x] = undefined;
         }
-        //TODO: CardPlayed
+        //TODO: CardPlayed, DamageUnit, UnitAttackTile, EnchantUnit, TargetTiles
     };
 
     function playEffect(effect) {
