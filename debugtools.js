@@ -38,7 +38,8 @@ function testHandCards() {
 
 function handleNextMessageTest() {
     "use strict";
-    var but = $("<input type='button' value='next!'></input");
+    var but = $("<input type='button' value='next!'></input>");
+    var checkbox = $('<input type="checkbox" title="autoplay" id="autoplay"></input>');
     function handleNextMessage() {
         var m = replayreader.getNextMessage();
         while (m.msg === "CardInfo" || m.msg === "AbilityInfo") {
@@ -48,7 +49,11 @@ function handleNextMessageTest() {
         if (m.msg === "NewEffects") {
             but.attr("disabled", "disabled"); //disable
             effects.readMessage(m, function () {
-                but.removeAttr("disabled"); //enable when effects ready
+                if (checkbox[0].checked) { //We wan't autoplay, don't enable button, just continue
+                    handleNextMessage();
+                } else {
+                    but.removeAttr("disabled"); //enable when effects ready
+                }
             });
         } else {
             console.log("Unhandled Message: ", m);
@@ -58,6 +63,8 @@ function handleNextMessageTest() {
     but.on('click', handleNextMessage);
 
     $("#debugcontrols").append(but);
+    $("#debugcontrols").append(checkbox);
 }
 $(handleNextMessageTest);
+
 
