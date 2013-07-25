@@ -62,7 +62,7 @@
         var i, width = $('#handcards').width();
 
         for (i = 0; i < currentHandCardsElem.length; i += 1) {
-            currentHandCardsElem[i].css('left', i * width / currentHandCardsElem.length).show();
+            currentHandCardsElem[i].css('left', (i + 0.25) * width / currentHandCardsElem.length).show();
         }
     }
     exports.moveCards = moveCards;
