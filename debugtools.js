@@ -50,7 +50,7 @@ function handleNextMessageTest() {
             but.attr("disabled", "disabled"); //disable
             effects.readMessage(m, function () {
                 if (checkbox[0].checked) { //We wan't autoplay, don't enable button, just continue
-                    handleNextMessage();
+                    setTimeout(handleNextMessage, 1000);
                 } else {
                     but.removeAttr("disabled"); //enable when effects ready
                 }
