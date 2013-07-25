@@ -8,10 +8,10 @@
         var scrollindex, scroll; 
         for (scrollindex in data.data) {
             scroll = data.data[scrollindex];
-            console.log(scroll)
+          //  console.log(scroll)
             scrollsData[parseInt(scroll.id, 10)] = scroll;
         }
-        console.log(scrollsData);
+        console.log("Loaded ScrollsGuide-Data");
     });
 
     if (source === "local") {
