@@ -39,6 +39,23 @@ $(function () {
         };
     }
 
+    var backgroundCtx = $("#fieldbackground")[0].getContext('2d');
+    function drawBackground() {
+        //Adjust canvas size
+        var width  = backgroundCtx.canvas.width  = $('#gamefield').innerWidth();
+        var height = backgroundCtx.canvas.height = $('#gamefield').innerHeight();
+        var fwidth = width / 2.0;
+        backgroundCtx.fillStyle = 'green';
+        backgroundCtx.fillRect(0, 0, width, height);
+        backgroundCtx.strokeStyle = 'black';
+        var x, y;
+        for (y = 0; y < 5; y += 1) {
+            for (x = 0; x < 3; x += 1) {
+                backgroundCtx.strokeRect((y % 2 === 1 ? fwidth / 8 : fwidth / 4) + x * fwidth / 4, y * height / 5, fwidth / 4, fwidth * 3 / 4 / 4);
+            }
+        }
+    }
+
     function calcSize() {
         console.log('resize!');
         var y, x;
@@ -57,6 +74,7 @@ $(function () {
             board.whiteIdols[y].height(height / 5).width(width / 8).css('top', y * height / 5);
         }
         handcards.moveCards();
+        drawBackground();
     };
     $(window).resize(calcSize);
 
@@ -124,4 +142,5 @@ $(function () {
     }
     $("#playButton").on('click', readFiles);
     validateReplayFiles();
+
 });

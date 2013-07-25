@@ -183,6 +183,8 @@
       color: yellow;
       text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     }
+
+
     </style>
   </head>
   <body>
@@ -199,7 +201,8 @@
     <div id="game" style="display: none">
       <!-- playername-classes will be updated according to who is the left and right player -->
       <div id="gameheader"><div class="playernameleft" id="playernamewhite">white</div><div id="roundcounter">1</div><div class="playernameright" id="playernameblack">black</div></div>
-      <div id="gamefield">
+      <div id="gamefield" style="height: 75%">
+        <canvas id="fieldbackground" style="position: absolute;"></canvas>
         <div class="field fieldleft" id="fieldwhite"></div>
         <div class="field fieldright" id="fieldblack"></div>
         <div id="message" style="display: none"></div>
