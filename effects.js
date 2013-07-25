@@ -17,9 +17,15 @@
         element.html(output);
     }
 
-    function displayMessage(message) {
-        //TODO: visible message
-        console.log(message);
+    function displayMessage(message, callback) {
+        $('#message').text(message).css('font-size', '0px').show().animate({'font-size': '30px'}, function () {
+            setTimeout(function () { /*Keep the message shown for x mseconds*/
+                $('#message').hide();
+                if (callback !== undefined) {
+                    callback();
+                }
+            }, 500);
+        });
     }
 
     function getPosition(positionString) {
@@ -56,12 +62,11 @@
                 } else {
                     handcards.setDepleteAction("SacCards", e.color);
                 }
+            }
+            if (e.resource !== undefined) {
+                displayMessage(replayreader.getName(e.color) + " sacrified for " + e.resource);
             } else {
-                if (e.resource !== undefined) {
-                    displayMessage(replayreader.getName(e.color) + " sacrified for " + e.resource);
-                } else {
-                    displayMessage(replayreader.getName(e.color) + " sacrified for Cards");
-                }
+                displayMessage(replayreader.getName(e.color) + " sacrified for Cards");
             }
             nextEffect();
         },
