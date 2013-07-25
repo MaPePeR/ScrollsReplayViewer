@@ -75,6 +75,7 @@
             var width = board.lastwidth, height = board.lastheight, p = getPosition(e.target.position);
             var isBackRow = p.y % 2 === 1, color = e.target.color;
             elem.width(width / 4).height(width * 3 / 4 / 4).css('top', p.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + p.x * width / 4);
+            elem.css('z-index', 100 + p.y);
             $("#field" + color).append(elem);
             board[color + 'field'][p.y][p.x] = elem;
             nextEffect();
@@ -97,7 +98,15 @@
             board[e.from.color + 'field'][fromPos.y][fromPos.x] = undefined;
             var animateCss = {'top': toPos.y * board.lastheight / 5};
             animateCss[replayreader.getPerspective() === e.to.color ? 'left' : 'right'] = (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4; 
-            elem.animate(animateCss, nextEffect);
+            if (fromPos.y <= toPos.y) {//Moving down
+                elem.css('z-index', 100 + toPos.y);
+                elem.animate(animateCss, nextEffect);
+            } else { //Moving up
+                elem.animate(animateCss, function () {
+                    elem.css('z-index', 100 + toPos.y);
+                    nextEffect();
+                });
+            }
             //elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
 
         }, 
