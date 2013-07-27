@@ -36,9 +36,10 @@
         };
     }
     function getTarget(targetObject) {
+        var b = targetObject.position.split(',');
         return {
-            'x': 2 - parseInt(targetObject[1], 10),
-            'y': parseInt(targetObject[0], 10),
+            'x': 2 - parseInt(b[1], 10),
+            'y': parseInt(b[0], 10),
             'color': targetObject.color
         };
     }
