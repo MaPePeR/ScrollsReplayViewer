@@ -35,6 +35,13 @@
             'y': parseInt(b[0], 10)
         };
     }
+    function getTarget(targetObject) {
+        return {
+            'x': 2 - parseInt(targetObject[1], 10),
+            'y': parseInt(targetObject[0], 10),
+            'color': targetObject.color
+        };
+    }
 
     var effectHandler = {
         "TurnBegin": function (e) {
@@ -71,14 +78,8 @@
             nextEffect();
         },
         "SummonUnit": function (e) {
-            var elem = $('<div class="fieldscroll"><input type="text" class="attack" disabled/><input type="text" class="countdown" disabled/><input type="text" class="health" disabled/></div>').css('background-image', 'url(' + images.getMainImageURLForScroll(e.unit.cardTypeId) + ')');
-            var width = board.lastwidth, height = board.lastheight, p = getPosition(e.target.position);
-            var isBackRow = p.y % 2 === 1, color = e.target.color;
-            elem.width(width / 4).height(width * 3 / 4 / 4).css('top', p.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + p.x * width / 4);
-            elem.css('z-index', 100 + p.y);
-            $("#field" + color).append(elem);
-            board[color + 'field'][p.y][p.x] = elem;
-            nextEffect();
+            var target = getTarget(e.target);
+            board.summonUnit(target, e.unit.cardTypeId, nextEffect);
         },
         "StatsUpdate": function (e) {
             var p = getPosition(e.target.position), elem = board[e.target.color + 'field'][p.y][p.x];
