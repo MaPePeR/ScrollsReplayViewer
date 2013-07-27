@@ -63,9 +63,15 @@
 
     exports.statsUpdate = function (target, stats, callback) {
         var elem = board[target.color].field[target.y][target.x];
-        elem.children('.attack').val(stats.ap);
-        elem.children('.countdown').val(stats.ac);
-        elem.children('.health').val(stats.hp);
+        if (stats.attack !== undefined) {
+            elem.children('.attack').val(stats.attack);
+        }
+        if (elem.countdown !== undefined) {
+            elem.children('.countdown').val(stats.countdown);
+        }
+        if (elem.health !== undefined) {
+            elem.children('.health').val(stats.health);
+        }
         if (stats.buffs !== undefined) {
             //TODO: Handle buffs
             console.log(stats.buffs);
@@ -73,6 +79,22 @@
         if (callback !== undefined) {
             callback();
         }
+    };
+
+    exports.damageUnit = function (target, damage, callback) {
+        var animLayer = $('#animationlayer');
+        var animateElem = $('<div class="damageunit">' + damage + '</div>');
+        var elem = board[target.color].field[target.y][target.x];
+        animateElem.css('top', elem.offset().top - animLayer.offset().top).css('left', elem.offset().left - animLayer.offset().left).width(elem.width()).height(elem.height());
+        animLayer.append(animateElem);
+        animateElem.animate({'font-size': '0'}, 1000, function () {
+            $(this).hide(function () {
+                $(this).remove();
+                if (callback !== undefined) {
+                    callback();
+                }
+            });
+        });
     };
 
 }(this.board = {}));

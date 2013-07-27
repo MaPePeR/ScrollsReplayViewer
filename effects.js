@@ -113,17 +113,9 @@
             board.removeUnit(target, nextEffect);
         },
         "DamageUnit": function (e) {
-            var p = getPosition(e.targetTile.position), elem = board[e.targetTile.color + 'field'][p.y][p.x];
-            var animLayer = $('#animationlayer');
-            var animateElem = $('<div class="damageunit">' + e.amount + '</div>');
-            animateElem.css('top', elem.offset().top - animLayer.offset().top).css('left', elem.offset().left - animLayer.offset().left).width(elem.width()).height(elem.height());
-            elem.children('.health').val(e.hp);
-            animLayer.append(animateElem);
-            animateElem.animate({'font-size': '0'}, 1000, function () {
-                $(this).hide(function () {
-                    $(this).remove();
-                    nextEffect();
-                });
+            var target = getTarget(e.targetTile);
+            board.damageUnit(target, e.amount, function () {
+                board.statsUpdate(target, {'health': e.hp}, nextEffect);
             });
         }
         //TODO: CardPlayed, UnitAttackTile, UnitAttackDone, EnchantUnit, TargetTiles
