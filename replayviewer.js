@@ -35,8 +35,8 @@ $(function () {
         var fileR = document.getElementById("replayfileR").files[0];
         replayreader.init(fileL, fileR, function () {
             $("#replaychooser").hide();
-            board.init();
             $("#game").show();
+            board.init();
             $("#playernamewhite").text(replayreader.getWhiteName());
             $("#playernameblack").text(replayreader.getBlackName());
             //Default: white player on the left. when perspective is 'black': swap postions of GUI elements
