@@ -49,4 +49,30 @@
         }
     };
 
+    exports.removeUnit = function (target, callback) {
+        var elem = board[target.color].field[target.y][target.x];
+
+        elem.hide(function () {
+            $(this).remove();
+            if (callback !== undefined) {
+                callback();
+            }
+        });
+        board[target.color].field[target.y][target.x] = undefined;
+    };
+
+    exports.statsUpdate = function (target, stats, callback) {
+        var elem = board[target.color].field[target.y][target.x];
+        elem.children('.attack').val(stats.ap);
+        elem.children('.countdown').val(stats.ac);
+        elem.children('.health').val(stats.hp);
+        if (stats.buffs !== undefined) {
+            //TODO: Handle buffs
+            console.log(stats.buffs);
+        }
+        if (callback !== undefined) {
+            callback();
+        }
+    };
+
 }(this.board = {}));

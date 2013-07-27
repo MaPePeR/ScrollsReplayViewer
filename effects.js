@@ -82,11 +82,8 @@
             board.summonUnit(target, e.unit.cardTypeId, nextEffect);
         },
         "StatsUpdate": function (e) {
-            var p = getPosition(e.target.position), elem = board[e.target.color + 'field'][p.y][p.x];
-            elem.children('.attack').val(e.ap);
-            elem.children('.countdown').val(e.ac);
-            elem.children('.health').val(e.hp);
-            //TODO: Handle e.buffs
+            var target = getTarget(e.target);
+            board.statsUpdate(target, {'attack': e.ap, 'countdown': e.ac, 'health': e.hp, 'buffs': e.buffs});
             nextEffect();
         },
         "MoveUnit": function (e) {
@@ -112,12 +109,8 @@
 
         }, 
         "RemoveUnit": function (e) {
-            var p = getPosition(e.tile.position), elem = board[e.tile.color + 'field'][p.y][p.x];
-            elem.hide(function () {
-                $(this).remove();
-                nextEffect();
-            });
-            board[e.tile.color + 'field'][p.y][p.x] = undefined;
+            var target = getTarget(e.tile);
+            board.removeUnit(target, nextEffect);
         },
         "DamageUnit": function (e) {
             var p = getPosition(e.targetTile.position), elem = board[e.targetTile.color + 'field'][p.y][p.x];
