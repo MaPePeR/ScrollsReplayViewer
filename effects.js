@@ -56,7 +56,7 @@
             nextEffect();
         },
         "IdolUpdate": function (e) {
-            $("#" + e.idol.color + "idol" + e.idol.position).text(e.idol.hp);
+            board.idolUpdate(e.idol.color, e.idol.position, e.idol.hp);
             nextEffect();
         },
         "HandUpdate": function (e) {
@@ -87,27 +87,8 @@
             nextEffect();
         },
         "MoveUnit": function (e) {
-            var fromPos = getPosition(e.from.position), toPos = getPosition(e.to.position);
-            var elem = board[e.from.color + 'field'][fromPos.y][fromPos.x];
-            if (e.to.color !== e.from.color) {
-                throw "moving units across boards is not yet implemented";
-            }
-            board[e.to.color + 'field'][toPos.y][toPos.x] = elem;
-            board[e.from.color + 'field'][fromPos.y][fromPos.x] = undefined;
-            var animateCss = {'top': toPos.y * board.lastheight / 5};
-            animateCss[replayreader.getPerspective() === e.to.color ? 'left' : 'right'] = (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4; 
-            if (fromPos.y <= toPos.y) {//Moving down
-                elem.css('z-index', 100 + toPos.y);
-                elem.animate(animateCss, nextEffect);
-            } else { //Moving up
-                elem.animate(animateCss, function () {
-                    elem.css('z-index', 100 + toPos.y);
-                    nextEffect();
-                });
-            }
-            //elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
-
-        }, 
+            board.moveUnit(getTarget(e.from), getTarget(e.to), nextEffect);
+        },
         "RemoveUnit": function (e) {
             var target = getTarget(e.tile);
             board.removeUnit(target, nextEffect);

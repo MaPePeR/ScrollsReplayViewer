@@ -97,4 +97,34 @@
         });
     };
 
+    exports.moveUnit = function (fromTarget, toTarget, callback) {
+        if (fromTarget.color !== toTarget.color) {
+            throw "moving units across boards is not yet implemented";
+        }
+        var elem = board[fromTarget.color].field[fromTarget.y][fromTarget.x];
+        board[toTarget.color].field[toTarget.y][toTarget.x] = elem;
+        board[fromTarget.color].field[fromTarget.y][fromTarget.x] = undefined;
+        var animateCss = {'top': toTarget.y * board.lastheight / 5};
+        animateCss[replayreader.getPerspective() === toTarget.color ? 'left' : 'right'] = (toTarget.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toTarget.x * board.lastwidth / 4;
+        if (fromTarget.y <= toTarget.y) {//Moving down
+            elem.css('z-index', 100 + toTarget.y);
+            elem.animate(animateCss, callback);
+        } else { //Moving up
+            elem.animate(animateCss, function () {
+                elem.css('z-index', 100 + toTarget.y);
+                if (callback !== undefined) {
+                    callback();
+                }
+            });
+        }
+        //elem.css('top', toPos.y * board.lastheight / 5).css(replayreader.getPerspective() === e.to.color ? 'left' : 'right', (toPos.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toPos.x * board.lastwidth / 4);
+    };
+
+    exports.idolUpdate = function (color, idolRow, health, callback) {
+        board[color].idols[idolRow].text(health);
+        if (callback !== undefined) {
+            callback();
+        }
+    };
+
 }(this.board = {}));
