@@ -132,7 +132,7 @@
                 });
             });
         }
-        //TODO: CardPlayed, UnitAttackTile, EnchantUnit, TargetTiles
+        //TODO: CardPlayed, UnitAttackTile, UnitAttackDone, EnchantUnit, TargetTiles
     };
 
     function playEffect(effect) {
@@ -159,7 +159,7 @@
             setTimeout(function () {
                 var effect = currentEffects.shift();
                 playEffect(effect);
-            }, 1);
+            }, 100);
         } else {
             //All Effects where played
             currentCallback();
