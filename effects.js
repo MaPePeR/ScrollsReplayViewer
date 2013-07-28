@@ -72,11 +72,10 @@
                 }
             }
             if (e.resource !== undefined) {
-                displayMessage(replayreader.getName(e.color) + " sacrified for " + e.resource);
+                displayMessage(replayreader.getName(e.color) + " sacrified for " + e.resource, nextEffect);
             } else {
-                displayMessage(replayreader.getName(e.color) + " sacrified for Cards");
+                displayMessage(replayreader.getName(e.color) + " sacrified for Cards", nextEffect);
             }
-            nextEffect();
         },
         "SummonUnit": function (e) {
             var target = getTarget(e.target);
