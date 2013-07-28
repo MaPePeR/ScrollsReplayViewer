@@ -49,7 +49,7 @@
             $("#roundcounter").text(e.turn);
             $("#playernamewhite, #playernameblack").removeClass("playernameactive");
             $("#playername" + e.color).addClass("playernameactive");
-            nextEffect();
+            displayMessage("Next Turn: " + replayreader.getName(e.color), nextEffect);
         },
         "ResourcesUpdate": function (e) {
             generateResourcesFromAssets($("#resourceswhite"), e.whiteAssets);
