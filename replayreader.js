@@ -113,6 +113,7 @@
                 headers['seeCards' + headers.perspective] = true;
                 headers['seeCards' + invertColor(headers.perspective)] = false;
                 readActiveResources(headers.perspective, reader);
+                headers[invertColor(headers.perspective) + 'Resources'] = [];
                 callback();
             });
         } else if (fileR !== undefined) {
@@ -123,6 +124,7 @@
                 headers['seeCards' + headers.perspective] = true;
                 headers['seeCards' + invertColor(headers.perspective)] = false;
                 readActiveResources(headers.perspective, reader);
+                headers[invertColor(headers.perspective) + 'Resources'] = [];
                 //The User want's to see the loaded replay on the right side:
                 headers.perspective = invertColor(headers.perspective);
                 callback();
@@ -142,11 +144,14 @@
     exports.getPerspective = function () {
         return headers.perspective;
     };
-    exports.getWhiteRessources = function () {
+    exports.getWhiteResources = function () {
         return headers.whiteResources;
     };
-    exports.getBlackRessources = function () {
+    exports.getBlackResources = function () {
         return headers.blackResources;
+    };
+    exports.getResources = function (color) {
+        return headers[color + 'Resources'];
     };
     exports.canSeeHandOfPlayer = function (color) {
         return headers['seeCards' + color];

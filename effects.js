@@ -6,10 +6,10 @@
 (function (exports) {
     "use strict";
 
-    function generateResourcesFromAssets(element, assets) {
-        var rtype, output = "";
+    function generateResourcesFromAssets(element, assets, color) {
+        var rtype, output = "", activeResources = replayreader.getResources(color);
         for (rtype in assets.availableResources) {
-            if (assets.outputResources[rtype] > 0) {
+            if (assets.outputResources[rtype] > 0 || activeResources.indexOf(rtype) >= 0) {
                 output += '<img class="resourceicon" src="http://www.scrollsguide.com/deckbuilder/img/' + rtype.toLowerCase() + '.png"/>' + assets.availableResources[rtype] + '/' + assets.outputResources[rtype] + '<br/>';
             }
         }
@@ -52,8 +52,8 @@
             displayMessage("Next Turn: " + replayreader.getName(e.color), nextEffect);
         },
         "ResourcesUpdate": function (e) {
-            generateResourcesFromAssets($("#resourceswhite"), e.whiteAssets);
-            generateResourcesFromAssets($("#resourcesblack"), e.blackAssets);
+            generateResourcesFromAssets($("#resourceswhite"), e.whiteAssets, 'white');
+            generateResourcesFromAssets($("#resourcesblack"), e.blackAssets, 'black');
             nextEffect();
         },
         "IdolUpdate": function (e) {
