@@ -44,7 +44,7 @@
             possibleDepleteActions[lastDepleteAction](currentHandCardsElem[index]);
             lastDepleteAction = undefined;
         } else {
-            currentHandCardsElem[index].hide('slow');
+            currentHandCardsElem[index].hide();
         }
         arrayRemove(currentHandCards, index);
         arrayRemove(currentHandCardsElem, index);

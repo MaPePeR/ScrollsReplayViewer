@@ -103,8 +103,23 @@
             board.idolUpdate(e.idol.color, e.idol.position, e.idol.hp);
             board.damageIdol(e.idol.color, e.idol.position, e.amount);
             nextEffect();
+        },
+        "CardPlayed": function (e) {
+            var elem = $('<img class="playedscroll" src="' + images.getScrollImageURL(e.card.typeId) + '"/>');
+            var animLayer = $('#animationlayer');
+            elem.css('left', $('#handcards').offset().left - animLayer.offset().left + $('#handcards').width() / 2)
+                .css('top', $('#handcards').offset().top - animLayer.offset().top);
+            animLayer.append(elem);
+            elem.animate({
+                'left': $('#' + e.color + 'idol2').offset().left - animLayer.offset().left,
+                'top': $('#' + e.color + 'idol2').offset().top - animLayer.offset().top
+            }, 500, function () {
+                $(this).remove();
+                nextEffect();
+            });
+            //Todo keep played scrolls shown.
         }
-        //TODO: CardPlayed, UnitAttackTile, UnitAttackIdol, UnitAttackDone, EnchantUnit, TargetTiles
+        //TODO: UnitAttackTile, UnitAttackIdol, UnitAttackDone, EnchantUnit, TargetTiles
     };
 
     function playEffect(effect) {
