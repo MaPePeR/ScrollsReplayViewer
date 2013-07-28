@@ -1,0 +1,178 @@
+    #game {
+      resize:none;
+      position: relative;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #gameheader {
+      position: relative;
+      width: 100%;
+      height: 24px;
+      /*background-color: green;*/
+      font-size: 20px;
+    }
+    #roundcounter {
+      position: absolute;
+      left: 50%;
+      width: 3em;
+      text-align: center;
+      margin-left: -1.5em;
+      border: 1px solid black;
+      border-radius: 1ex;
+    }
+    .playernameleft {
+      position: absolute;
+      left: 0px;
+      right: 50%;
+      text-align: right;
+      padding-right: 2em;
+    }
+    .playernameright {
+      position: absolute;
+      left: 50%;
+      right: 0px;
+      text-align: left;
+      padding-left: 2em;
+    }
+    .playernameactive {
+      font-weight: bold;
+    }
+    .field {
+      position: absolute;
+      width: 50%;
+      height: 75%;
+    }
+
+    /*Left Field*/
+    .fieldleft {
+      text-align: left;
+      left: 0%;
+    }
+
+    /*Right field*/
+    .fieldright {
+      text-align: right;
+      right: 0%;
+    }
+    .fieldscroll {
+      position: absolute;
+      border: 1px solid black;
+      border-radius: 5%;
+      background-size: 100% auto;
+    }
+
+    .fieldscroll .attack {
+      font-size: 20px;
+      color: red;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+    .fieldscroll .countdown {
+      font-size: 20px;
+      color: white;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+    .fieldscroll input {
+        border: none;
+        background-color: transparent;
+        resize: none;
+    }
+    .fieldscroll .health {
+      font-size: 20px;
+      color: yellow;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+
+    .idol {
+      text-align: center;
+      position: absolute;
+      background-color: gray;
+    }
+    .fieldleft .idol {
+      left: 0px;
+    }
+    .fieldright .idol {
+      right: 0px;
+    }
+    #botrow {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 22%;
+    }
+    .playerresources {
+      position: absolute;
+      height: 100%;
+      width: 7em;
+      overflow: auto;
+      resize: none;
+    }
+    .playerresourcesleft {
+      text-align: left;
+      left: 0%;
+    }
+    .playerresourcesright {
+      text-align: right;
+      right: 0%;
+    }
+
+    img.resourceicon {
+      width: 1em;
+      height: 1em;
+    }
+    .playerresourcesleft img.resourceicon {
+      float: left;
+      margin-right: 1em;
+    }
+    .playerresourcesright img.resourceicon {
+      float: right;
+      margin-left: 1em;
+    }
+
+    #handcards {
+      position: absolute;
+      left: 7em;
+      right: 7em;
+      height: 100%;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .handscroll {
+      position: absolute;
+      height: 200%;
+      top: 0%;
+      transition: top 0.5s;
+    }
+    .handscroll:hover {
+      top: -99%;
+    }
+
+    #animationlayer {
+      position: absolute;
+      left: 0px;top: 0px; width: 0px; height: 0px;
+      z-index: 100;
+    }
+
+    .damageunit {
+      text-align: center;
+      vertical-align: middle;
+      line-height: 100px;
+      font-size: 100px;   
+      position: absolute;
+      color: gray;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      font-weight: bold;
+    }
+
+    #message {
+      text-align: center;
+      position: absolute;
+      top: 37.5%; /*Center of field, which has 75% height*/
+      width: 100%;
+      color: yellow;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      z-index: 500;
+    }
+
