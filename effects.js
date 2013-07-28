@@ -99,8 +99,13 @@
             board.statsUpdate(target, {'health': e.kill ? 0 : e.hp});
             board.damageUnit(target, e.amount);
             nextEffect();
+        },
+        "DamageIdol": function (e) {
+            board.idolUpdate(e.idol.color, e.idol.position, e.idol.hp);
+            board.damageIdol(e.idol.color, e.idol.position, e.amount);
+            nextEffect();
         }
-        //TODO: CardPlayed, UnitAttackTile, UnitAttackDone, EnchantUnit, TargetTiles
+        //TODO: CardPlayed, UnitAttackTile, UnitAttackIdol, UnitAttackDone, EnchantUnit, TargetTiles
     };
 
     function playEffect(effect) {
