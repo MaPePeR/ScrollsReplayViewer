@@ -153,10 +153,10 @@
         if (stats.attack !== undefined) {
             elem.children('.attack').val(stats.attack);
         }
-        if (elem.countdown !== undefined) {
+        if (stats.countdown !== undefined) {
             elem.children('.countdown').val(stats.countdown);
         }
-        if (elem.health !== undefined) {
+        if (stats.health !== undefined) {
             elem.children('.health').val(stats.health);
         }
         if (stats.buffs !== undefined) {
