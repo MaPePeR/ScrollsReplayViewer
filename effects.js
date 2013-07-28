@@ -96,9 +96,9 @@
         },
         "DamageUnit": function (e) {
             var target = getTarget(e.targetTile);
-            board.damageUnit(target, e.amount, function () {
-                board.statsUpdate(target, {'health': e.hp}, nextEffect);
-            });
+            board.statsUpdate(target, {'health': e.kill ? 0 : e.hp});
+            board.damageUnit(target, e.amount);
+            nextEffect();
         }
         //TODO: CardPlayed, UnitAttackTile, UnitAttackDone, EnchantUnit, TargetTiles
     };
@@ -122,12 +122,12 @@
     }
     var currentEffects = [];
     var currentCallback = function () {};
-    function nextEffect() {
+    function nextEffect(waittime) {
         if (currentEffects.length > 0) {
             setTimeout(function () {
                 var effect = currentEffects.shift();
                 playEffect(effect);
-            }, 100);
+            }, waittime !== undefined ? waittime : 0);
         } else {
             //All Effects where played
             currentCallback();

@@ -174,7 +174,7 @@
         var elem = board[target.color].field[target.y][target.x];
         animateElem.css('top', elem.offset().top - animLayer.offset().top).css('left', elem.offset().left - animLayer.offset().left).width(elem.width()).height(elem.height());
         animLayer.append(animateElem);
-        animateElem.animate({'font-size': '0'}, 1000, function () {
+        animateElem.animate({'top': '-=100px', 'opacity': 0}, 1000, function () {
             $(this).hide(function () {
                 $(this).remove();
                 if (callback !== undefined) {
