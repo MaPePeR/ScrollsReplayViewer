@@ -67,11 +67,11 @@
         backgroundCtx.fillRect(0, 0, width, height);
         backgroundCtx.strokeStyle = 'black';
         var x, y;
-        for (y = 0; y < 5; y += 1) {
+        /*for (y = 0; y < 5; y += 1) {
             for (x = 0; x < 3; x += 1) {
                 backgroundCtx.strokeRect((y % 2 === 1 ? fwidth / 8 : fwidth / 4) + x * fwidth / 4, y * height / 5, fwidth / 4, fwidth * 3 / 4 / 4);
             }
-        }
+        }*/
     }
 
     function calcSize() {
