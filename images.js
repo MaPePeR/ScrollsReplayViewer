@@ -23,6 +23,10 @@
             return "./mainimages/" + scrollsData[scrollid].image + ".png";
         };
 
+        exports.getAnimationPreviewURLForScroll = function (scrollid) {
+            return "./animationimages/" + scrollsData[scrollid].animationpreview;
+        };
+
     } else if (source === "sg") {
         exports.getScrollImageURL = function (scrollid) {
             return "http://a.scrollsguide.com/image/screen?name=" + encodeURIComponent(scrollsData[scrollid].name) + "&size=small";
@@ -31,6 +35,7 @@
         exports.getMainImageURLForScroll = function (scrollid) {
             return "http://www.scrollsguide.com/app/low_res/" + scrollsData[scrollid].image + ".png";
         };
+
         exports.getAnimationPreviewURLForScroll = function (scrollid) {
             return "http://www.scrollsguide.com/app/animationimages/" + scrollsData[scrollid].animationpreview;
         };
