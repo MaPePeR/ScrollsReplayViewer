@@ -1,10 +1,12 @@
 /*jslint browser: true, vars: true*/
-/*global images, $, replayreader, board: false*/
+/*global images, $, replayreader, board, handcards: false*/
 
 
 //Effects module to handle NewEffect-Messages
 (function (exports) {
     "use strict";
+
+    var nextEffect;
 
     function generateResourcesFromAssets(element, assets, color) {
         var rtype, output = "", activeResources = replayreader.getResources(color);
@@ -140,8 +142,8 @@
         }
     }
     var currentEffects = [];
-    var currentCallback = function () {};
-    function nextEffect(waittime) {
+    var currentCallback;
+    nextEffect = function nextEffect(waittime) {
         if (currentEffects.length > 0) {
             setTimeout(function () {
                 var effect = currentEffects.shift();
@@ -149,9 +151,11 @@
             }, waittime !== undefined ? waittime : 0);
         } else {
             //All Effects where played
-            currentCallback();
+            if (currentCallback !== undefined) {
+                currentCallback();
+            }
         }
-    }
+    };
 
     exports.readMessage = function (m, callback) {
         if (m.msg !== "NewEffects") {
