@@ -124,7 +124,7 @@
     */
 
     exports.summonUnit = function (target, cardTypeId, callback) {
-        var elem = $('<div class="fieldscroll"><span type="text" class="attack"/><span type="text" class="countdown"/><span type="text" class="health"/></div>').css('background-image', 'url(' + images.getAnimationPreviewURLForScroll(cardTypeId) + ')');
+        var elem = $('<div class="fieldscroll"><span class="attack stat"/><span class="countdown stat"/><span class="health stat"/><img class="animationpreview" src="' + images.getAnimationPreviewURLForScroll(cardTypeId) + '"/></div>');
         var width = board.lastwidth, height = board.lastheight;
         var isBackRow = target.y % 2 === 1, color = target.color;
         elem.width(width / 4).height(width * 3 / 4 / 4).css('top', target.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + target.x * width / 4);
