@@ -154,6 +154,11 @@
             elem.children('.attack').text(stats.attack);
         }
         if (stats.countdown !== undefined) {
+            if (stats.countdown ===  -1) {
+                elem.children('.countdown').hide();
+            } else {
+                elem.children('.countdown').show();
+            }
             elem.children('.countdown').text(stats.countdown);
         }
         if (stats.health !== undefined) {
