@@ -243,4 +243,26 @@
         }
     };
 
+    exports.unitAttackTile = function (attacker, attackedTile, callback) {
+        var elem = board[attacker.color].field[attacker.y][attacker.x];
+        if (images.isRanged(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
+            //TODO: ranged attack
+            if (callback !== undefined) {
+                callback();
+            }
+        } else {
+            var animation = {};
+            //TODO: fix positioning
+            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + (board.lastwidth * ((attacker.y % 2) + 6 -  attacker.x - attackedTile.x + 0.5) / 4) + 'px';
+            elem.animate(animation, 2000, callback);
+        }
+    }
+
+    exports.unitAttackDone = function (attacker, callback) {
+        var elem = board[attacker.color].field[attacker.y][attacker.x];
+        var animation = {};
+        animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
+        elem.animate(animation, 1000, callback);
+    }
+
 }(this.board = {}));

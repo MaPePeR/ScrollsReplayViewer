@@ -120,8 +120,17 @@
                 nextEffect();
             });
             //Todo keep played scrolls shown.
+        },
+        "UnitAttackTile": function (e) {
+            board.unitAttackTile(getTarget(e.source), getTarget(e.target), nextEffect);
+        },
+/*        "UnitAttackIdol": function (e) {
+            board.unitAttackIdol(getTarget(e.attacker), e.idol, nextEffect);
+        },*/
+        "UnitAttackDone": function (e) {
+            board.unitAttackDone(getTarget(e.source), nextEffect);
         }
-        //TODO: UnitAttackTile, UnitAttackIdol, UnitAttackDone, EnchantUnit, TargetTiles
+        //TODO: EnchantUnit, TargetTiles
     };
 
     function playEffect(effect) {
