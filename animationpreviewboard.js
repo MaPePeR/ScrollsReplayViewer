@@ -124,7 +124,7 @@
     */
 
     exports.summonUnit = function (target, cardTypeId, callback) {
-        var elem = $('<div class="fieldscroll"><input type="text" class="attack" disabled/><input type="text" class="countdown" disabled/><input type="text" class="health" disabled/></div>').css('background-image', 'url(' + images.getMainImageURLForScroll(cardTypeId) + ')');
+        var elem = $('<div class="fieldscroll"><span type="text" class="attack"/><span type="text" class="countdown"/><span type="text" class="health"/></div>').css('background-image', 'url(' + images.getAnimationPreviewURLForScroll(cardTypeId) + ')');
         var width = board.lastwidth, height = board.lastheight;
         var isBackRow = target.y % 2 === 1, color = target.color;
         elem.width(width / 4).height(width * 3 / 4 / 4).css('top', target.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + target.x * width / 4);
@@ -151,13 +151,13 @@
     exports.statsUpdate = function (target, stats, callback) {
         var elem = board[target.color].field[target.y][target.x];
         if (stats.attack !== undefined) {
-            elem.children('.attack').val(stats.attack);
+            elem.children('.attack').text(stats.attack);
         }
         if (stats.countdown !== undefined) {
-            elem.children('.countdown').val(stats.countdown);
+            elem.children('.countdown').text(stats.countdown);
         }
         if (stats.health !== undefined) {
-            elem.children('.health').val(stats.health);
+            elem.children('.health').text(stats.health);
         }
         if (stats.buffs !== undefined) {
             //TODO: Handle buffs

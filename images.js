@@ -24,7 +24,7 @@
         };
 
         exports.getAnimationPreviewURLForScroll = function (scrollid) {
-            return "./animationimages/" + scrollsData[scrollid].animationpreview;
+            return "./animationimages/" + scrollsData[scrollid].animationpreview + '.png';
         };
 
     } else if (source === "sg") {
