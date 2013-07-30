@@ -1,10 +1,13 @@
 import os
 from os.path import exists
 from sys import exit
-from urllib.request import urlopen
+from urllib.request import urlopen as urlopen_, Request
 from urllib.parse import urlencode
 import json
 import time
+
+def urlopen(url):
+    return urlopen_(Request(url, headers={'User-agent':'Downloading images to save bandwidth on your side.'}))
 
 scrollImageFolder = './scrollimages/'
 if not exists(scrollImageFolder):
@@ -45,7 +48,7 @@ def downloadMainImage(id, file):
 
 def downloadAnimationPreview(id, file):
     url = "http://www.scrollsguide.com/app/low_res/{0}.png".format(id)
-    print("Downloading Image-{0} to {1}".format(id, file))
+    print("Downloading Animation Preview Image-{0} to {1}".format(id, file))
     req = urlopen(url)
     with open(file, 'wb') as fp:
         while True:
@@ -70,24 +73,32 @@ for scroll in scrollsData:
     pathForScrollImage = "{0}{1}.png".format(scrollImageFolder, scroll['id'])
     pathForMainImage = "{0}{1}.png".format(mainImageFolder, scroll['image'])
     pathForAnimationPreview = "{0}{1}.png".format(animationPreviewFolder, scroll['animationpreview'])
+    try:
+        if exists(pathForScrollImage):
+            print("Skipping Scroll-ID: {0} Name: {1}".format(scroll['id'], scroll['name']))
+        else:
+            print("Downloading ID: {0} Name: {1}".format(scroll['id'], scroll['name']))
+            downloadScrollImage(scroll['name'], pathForScrollImage)
+            time.sleep(5)
+    except Exception as e:
+        print(e)
 
-    if exists(pathForScrollImage):
-        print("Skipping Scroll-ID: {0} Name: {1}".format(scroll['id'], scroll['name']))
-    else:
-        print("Downloading ID: {0} Name: {1}".format(scroll['id'], scroll['name']))
-        downloadScrollImage(scroll['name'], pathForScrollImage)
-        time.sleep(5)
+    try:
+        if exists(pathForMainImage):
+            print("Skipping Main-Image: {0} Name: {1}".format(scroll['image'], scroll['name']))
+        else:
+            print("Downloading Image-ID: {0} Name: {1}".format(scroll['image'], scroll['name']))
+            downloadMainImage(scroll['image'], pathForMainImage)
+            time.sleep(5)
+    except Exception as e:
+        print(e)
 
-    if exists(pathForMainImage):
-        print("Skipping Main-Image: {0} Name: {1}".format(scroll['image'], scroll['name']))
-    else:
-        print("Downloading Image-ID: {0} Name: {1}".format(scroll['image'], scroll['name']))
-        downloadMainImage(scroll['image'], pathForMainImage)
-        time.sleep(5)
-
-    if exists(pathForAnimationPreview):
-        print("Skipping Animation Preview-Image: {0} Name: {1}".format(scroll['animationpreview'], scroll['name']))
-    else:
-        print("Downloading Image-ID: {0} Name: {1}".format(scroll['animationpreview'], scroll['name']))
-        downloadMainImage(scroll['animationpreview'], pathForAnimationPreview)
-        time.sleep(5)
+    try:
+        if exists(pathForAnimationPreview) or scroll['animationpreview'] == 0:
+            print("Skipping Animation Preview-Image: {0} Name: {1}".format(scroll['animationpreview'], scroll['name']))
+        else:
+            print("Downloading Animation Preview-Image: {0} Name: {1}".format(scroll['animationpreview'], scroll['name']))
+            downloadMainImage(scroll['animationpreview'], pathForAnimationPreview)
+            time.sleep(5)
+    except Exception as e:
+        print(e)
