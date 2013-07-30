@@ -5,7 +5,7 @@
 
     $.getJSON("http://a.scrollsguide.com/scrolls?norules", function (data) {
         scrollsData = {};
-        var scrollindex, scroll; 
+        var scrollindex, scroll;
         for (scrollindex in data.data) {
             scroll = data.data[scrollindex];
           //  console.log(scroll)
@@ -30,6 +30,9 @@
 
         exports.getMainImageURLForScroll = function (scrollid) {
             return "http://www.scrollsguide.com/app/low_res/" + scrollsData[scrollid].image + ".png";
+        };
+        exports.getAnimationPreviewURLForScroll = function (scrollid) {
+            return "http://www.scrollsguide.com/app/animationimages/" + scrollsData[scrollid].animationpreview;
         };
     }
 }(this.images = {}));
