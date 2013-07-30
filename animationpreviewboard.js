@@ -24,11 +24,13 @@
             "white" : {
                 "fieldElem": $('#fieldwhite'),
                 "field": createArray(5, 3),
+                "fieldIds": createArray(5, 3),
                 "idols": createArray(5)
             },
             "black" : {
                 "fieldElem": $('#fieldblack'),
                 "field": createArray(5, 3),
+                "fieldIds": createArray(5, 3),
                 "idols": createArray(5)
             },
             "lastwidth": $('#fieldwhite').width(),
@@ -105,9 +107,11 @@
                 for (x = 0; x < 3; x += 1) {
                     if (board.white.field[y][x] !== undefined) {
                         board.white.field[y][x].remove();
+                        board.white.fieldIds[y][x] = undefined;
                     }
                     if (board.black.field[y][x] !== undefined) {
                         board.black.field[y][x].remove();
+                        board.black.fieldIds[y][x] = undefined;
                     }
                 }
                 board.black.idols[y].remove();
@@ -131,6 +135,7 @@
         elem.css('z-index', 100 + target.y);
         board[color].fieldElem.append(elem);
         board[color].field[target.y][target.x] = elem;
+        board[color].fieldIds[target.y][target.x] = cardTypeId;
         if (callback !== undefined) {
             callback();
         }
@@ -145,6 +150,7 @@
                 callback();
             }
         });
+        board[target.color].fieldIds[target.y][target.x] = undefined;
         board[target.color].field[target.y][target.x] = undefined;
     };
 
@@ -211,7 +217,9 @@
         }
         var elem = board[fromTarget.color].field[fromTarget.y][fromTarget.x];
         board[toTarget.color].field[toTarget.y][toTarget.x] = elem;
+        board[toTarget.color].fieldIds[toTarget.y][toTarget.x] = board[fromTarget.color].fieldIds[fromTarget.y][fromTarget.x]
         board[fromTarget.color].field[fromTarget.y][fromTarget.x] = undefined;
+        board[fromTarget.color].fieldIds[fromTarget.y][fromTarget.x] = undefined;
         var animateCss = {'top': toTarget.y * board.lastheight / 5};
         animateCss[replayreader.getPerspective() === toTarget.color ? 'left' : 'right'] = (toTarget.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toTarget.x * board.lastwidth / 4;
         if (fromTarget.y <= toTarget.y) {//Moving down
