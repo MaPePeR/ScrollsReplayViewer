@@ -1,9 +1,10 @@
 /*global $: false*/
 (function (exports) {
+    //TODO: rename module
     "use strict";
     var source = "local", scrollsData;
 
-    $.getJSON("http://a.scrollsguide.com/scrolls?norules", function (data) {
+    $.getJSON("http://a.scrollsguide.com/scrolls", function (data) {
         scrollsData = {};
         var scrollindex, scroll;
         for (scrollindex in data.data) {
@@ -13,6 +14,16 @@
         }
         console.log("Loaded ScrollsGuide-Data");
     });
+
+    exports.isRanged = function (typeId) {
+        var passives = scrollsData[typeId].passiverules, i;
+        for (i = 0; i < passives.length; i += 1) {
+            if (passives[i].name === "Ranged attack") {
+                return true;
+            }
+        }
+        return false;
+    }
 
     if (source === "local") {
         exports.getScrollImageURL = function (scrollid) {
