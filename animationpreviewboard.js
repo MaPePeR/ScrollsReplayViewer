@@ -258,9 +258,8 @@
             }
         } else {
             var animation = {};
-            //TODO: fix positioning
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + (board.lastwidth * ((attacker.y % 2) + 6 -  attacker.x - attackedTile.x + 0.5) / 4) + 'px';
-            elem.animate(animation, 2000, callback);
+            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4  ) + 'px';
+            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, 500, 'linear', callback);
         }
     }
 
@@ -268,7 +267,10 @@
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         var animation = {};
         animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
-        elem.animate(animation, 1000, callback);
+        elem.animate(animation, 250, 'linear', function () {
+            callback();
+            elem.css('z-index', zIndexForRow(attacker.y));
+        });
     }
 
 }(this.board = {}));
