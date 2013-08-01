@@ -132,7 +132,7 @@
         var width = board.lastwidth, height = board.lastheight;
         var isBackRow = target.y % 2 === 1, color = target.color;
         elem.width(width / 4).height(width * 3 / 4 / 4).css('top', target.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + target.x * width / 4);
-        elem.css('z-index', 100 + target.y);
+        elem.css('z-index', 100 + target.y * 100);
         board[color].fieldElem.append(elem);
         board[color].field[target.y][target.x] = elem;
         board[color].fieldIds[target.y][target.x] = cardTypeId;
@@ -223,11 +223,11 @@
         var animateCss = {'top': toTarget.y * board.lastheight / 5};
         animateCss[replayreader.getPerspective() === toTarget.color ? 'left' : 'right'] = (toTarget.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + toTarget.x * board.lastwidth / 4;
         if (fromTarget.y <= toTarget.y) {//Moving down
-            elem.css('z-index', 100 + toTarget.y);
+            elem.css('z-index', 100 + toTarget.y * 100);
             elem.animate(animateCss, callback);
         } else { //Moving up
             elem.animate(animateCss, function () {
-                elem.css('z-index', 100 + toTarget.y);
+                elem.css('z-index', 100 + toTarget.y * 100);
                 if (callback !== undefined) {
                     callback();
                 }
