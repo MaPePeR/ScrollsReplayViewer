@@ -221,3 +221,19 @@
       z-index: 1200;
     }
 
+    .endgame {
+      position: absolute;
+      left: 0; right: 0;
+      background-color:rgba(0,0,0,0.75);
+    }
+    .endgamestats {
+      width: 400px;
+      height: 400px;
+      color: white;
+      position: absolute;
+      left: 50%;
+      top:50%;
+      margin-left: -200px;
+      margin-top:  -200px;
+    }
+

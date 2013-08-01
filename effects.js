@@ -129,6 +129,17 @@
         },
         "UnitAttackDone": function (e) {
             board.unitAttackDone(getTarget(e.source), nextEffect);
+        },
+        "EndGame": function (e) {
+            var animLayer = $('#animationlayer');
+            var w = e.winner, l = invertColor(e.winner);
+            var wStats = e[w + 'Stats'], lStats = e[l + 'Stats'];
+            var wReward = e[w + 'GoldReward'], lReward = e[l + 'GoldReward'];
+            var elem = $(
+                '<div class="endgame"><table class="endgamestats"><tr><td></td><th>Winner</th><th></th></tr><tr><td></td><td>' + replayreader.getName(w) + '</td><td>' + replayreader.getName(l) + '</td></tr><tr><th>Idol Damage:</th><td>' + wStats.idolDamage + '</td><td>' + lStats.idolDamage + '</td></tr><tr><th>Unit Damage:</th><td>' + wStats.unitDamage + '</td><td>' + lStats.unitDamage + '</td></tr><tr><th>Units Played:</th><td>' + wStats.unitsPlayed + '</td><td>' + lStats.unitsPlayed + '</td></tr><tr><th>Spells Played:</th><td>' + wStats.spellsPlayed + '</td><td>' + lStats.spellsPlayed + '</td></tr><tr><th>Enchantments Played:</th><td>' + wStats.enchantmentsPlayed + '</td><td>' + lStats.enchantmentsPlayed + '</td></tr><tr><th>Scrolls Drawn:</th><td>' + wStats.scrollsDrawn + '</td><td>' + lStats.scrollsDrawn + '</td></tr><tr><th>Seconds Taken:</th><td>' + wStats.totalMs / 1000.0 + '</td><td>' + lStats.totalMs / 1000.0 + '</td></tr><tr><th>Most Damage Unit:</th><td>' + wStats.mostDamageUnit + '</td><td>' + lStats.mostDamageUnit + '</td></tr><tr><th>Idols Destroyed:</th><td>' + wStats.idolsDestroyed + '</td><td>' + lStats.idolsDestroyed + '</td></tr><tr><th>Rewards:</th></tr><tr><th>Match:</th><td>' + wReward.matchReward + '</td><td>' + lReward.matchReward + '</td></tr><tr><th>Match Completion:</th><td>' + wReward.matchCompletionReward + '</td><td>' + lReward.matchCompletionReward + '</td></tr><tr><th>Idols Destroyed</th><td>' + wReward.idolsDestroyedReward + '</td><td>' + lReward.idolsDestroyedReward + '</td></tr><tr><th>Total: </th><td>' + wReward.totalReward + '</td><td>' + lReward.totalReward + '</td></table></div>'
+            );
+            elem.width($('#game').width()).height($('#game').height());
+            animLayer.append(elem);
         }
         //TODO: EnchantUnit, TargetTiles
     };

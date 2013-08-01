@@ -1,16 +1,20 @@
 /*jslint vars: true*/
+
+function invertColor(color) {
+    "use strict";
+    if (color === "black") {
+        return "white";
+    } else if (color === "white") {
+        return "black";
+    } else {
+        throw "invalid color: " + color;
+    }
+}
+
 (function (exports) {
     "use strict";
 
-    function invertColor(color) {
-        if (color === "black") {
-            return "white";
-        } else if (color === "white") {
-            return "black";
-        } else {
-            throw "invalid color: " + color;
-        }
-    }
+
 
     function SgrReader(plaintext) {
         this.messages = plaintext.split("\n\n\n");
