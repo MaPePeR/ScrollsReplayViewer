@@ -124,9 +124,9 @@
         "UnitAttackTile": function (e) {
             board.unitAttackTile(getTarget(e.source), getTarget(e.target), nextEffect);
         },
-/*        "UnitAttackIdol": function (e) {
+        "UnitAttackIdol": function (e) {
             board.unitAttackIdol(getTarget(e.attacker), e.idol, nextEffect);
-        },*/
+        },
         "UnitAttackDone": function (e) {
             board.unitAttackDone(getTarget(e.source), nextEffect);
         }

@@ -263,6 +263,20 @@
         }
     }
 
+    exports.unitAttackIdol = function (attacker, idolRow, callback) {
+        var elem = board[attacker.color].field[attacker.y][attacker.x];
+        if (images.isRangedOrLobber(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
+            //TODO: ranged attack
+            if (callback !== undefined) {
+                callback();
+            }
+        } else {
+            var animation = {};
+            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4  ) + 'px';
+            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, 500, 'linear', callback);
+        }
+    }
+
     exports.unitAttackDone = function (attacker, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         var animation = {};
