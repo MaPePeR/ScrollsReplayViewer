@@ -245,7 +245,7 @@
 
     exports.unitAttackTile = function (attacker, attackedTile, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
-        if (images.isRanged(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
+        if (images.isRangedOrLobber(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
             //TODO: ranged attack
             if (callback !== undefined) {
                 callback();

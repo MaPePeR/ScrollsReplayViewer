@@ -23,7 +23,27 @@
             }
         }
         return false;
-    }
+    };
+
+    exports.isLobber = function (typeId) {
+        var passives = scrollsData[typeId].passiverules, i;
+        for (i = 0; i < passives.length; i += 1) {
+            if (passives[i].name === "Lobber") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    exports.isRangedOrLobber = function (typeId) {
+        var passives = scrollsData[typeId].passiverules, i;
+        for (i = 0; i < passives.length; i += 1) {
+            if (passives[i].name === "Lobber" || passives[i].name === "Ranged attack") {
+                return true;
+            }
+        }
+        return false;
+    };
 
     if (source === "local") {
         exports.getScrollImageURL = function (scrollid) {
