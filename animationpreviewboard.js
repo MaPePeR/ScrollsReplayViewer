@@ -166,10 +166,15 @@
             elem.children('.attack').text(stats.attack);
         }
         if (stats.countdown !== undefined) {
-            if (stats.countdown ===  -1) {
+            if (stats.countdown < 0) {
                 elem.children('.countdown').hide();
             } else {
                 elem.children('.countdown').show();
+                if (stats.countdown === 0 || (target.color ===  currentTurn && stats.countdown <= 1)) {
+                    elem.addClass('attackingSoon');
+                } else {
+                    elem.removeClass('attackingSoon');
+                }
             }
             elem.children('.countdown').text(stats.countdown);
         }
