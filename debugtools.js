@@ -40,26 +40,33 @@ function handleNextMessageTest() {
     "use strict";
     var but = $("<input type='button' value='next!'></input>");
     var checkbox = $('<input type="checkbox" title="autoplay" id="autoplay"></input>');
+
+    function nextMessageIfAutoPlay() {
+        if (checkbox[0].checked) { //We wan't autoplay, don't enable button, just continue
+            setTimeout(handleNextMessage, 1000);
+        } else {
+            but.removeAttr("disabled"); //enable when effects ready
+        }
+    }
+
     function handleNextMessage() {
         var m = replayreader.getNextMessage();
         while (m.msg === "CardInfo" || m.msg === "AbilityInfo") {
             m = replayreader.getNextMessage();
         }
         console.log(JSON.stringify(m));
-        if (m.msg === "NewEffects") {
+        if (m.msg === "GameChatMessage") {
+            //TODO Show Chat Window
+            console.log("CHAT: " + m.from + ":" + m.text);
+            nextMessageIfAutoPlay();
+        } else if (m.msg === "NewEffects") {
             but.attr("disabled", "disabled"); //disable
-            effects.readMessage(m, function () {
-                if (checkbox[0].checked) { //We wan't autoplay, don't enable button, just continue
-                    setTimeout(handleNextMessage, 1000);
-                } else {
-                    but.removeAttr("disabled"); //enable when effects ready
-                }
-            });
+            effects.readMessage(m, nextMessageIfAutoPlay);
         } else {
             console.log("Unhandled Message: ", m);
         }
     }
-    
+
     but.on('click', handleNextMessage);
 
     $("#debugcontrols").append(but);
