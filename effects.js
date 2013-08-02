@@ -81,7 +81,11 @@
         },
         "SummonUnit": function (e) {
             var target = getTarget(e.target);
-            board.summonUnit(target, e.unit.cardTypeId, nextEffect);
+            if (e.unit) { //Old Format <= 0.95.1 (?)
+                board.summonUnit(target, e.unit.cardTypeId, nextEffect);
+            } else if (e.card) { //New Format = 0.96.0
+                board.summonUnit(target, e.card.typeId, nextEffect);
+            }
         },
         "StatsUpdate": function (e) {
             var target = getTarget(e.target);
