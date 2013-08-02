@@ -110,10 +110,13 @@
 
     .animationpreview {
       position: absolute;
-      margin-left: -45%;
+      background-repeat:no-repeat;
+      background-position: center center; 
+      background-size: contain;
+      top: 0;
       bottom: 2ex;
-      width: 90%;
-      left: 50%;
+      right: 0;
+      left: 0;
     }
 
     .fieldleft .animationpreview {
