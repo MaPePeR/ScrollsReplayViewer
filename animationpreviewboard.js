@@ -170,7 +170,8 @@
                 elem.children('.countdown').hide();
             } else {
                 elem.children('.countdown').show();
-                if (stats.countdown === 0 || (target.color ===  currentTurn && stats.countdown <= 1)) {
+                //TODO: show attackingSoon on the not current Active Player with countdown <= 1
+                if (stats.countdown === 0) {
                     elem.addClass('attackingSoon');
                 } else {
                     elem.removeClass('attackingSoon');
