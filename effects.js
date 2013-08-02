@@ -107,7 +107,8 @@ var currentTurn;
             nextEffect();
         },
         "HealUnit": function (e) {
-            board.healUnit(getTarget(e.target), e.amount, nextEffect);
+            board.healUnit(getTarget(e.target), e.amount);
+            nextEffect();
         },
         "DamageIdol": function (e) {
             board.idolUpdate(e.idol.color, e.idol.position, e.idol.hp);
