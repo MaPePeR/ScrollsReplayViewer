@@ -106,6 +106,9 @@ var currentTurn;
             board.damageUnit(target, e.amount);
             nextEffect();
         },
+        "HealUnit": function (e) {
+            board.healUnit(getTarget(e.target), e.amount, nextEffect);
+        },
         "DamageIdol": function (e) {
             board.idolUpdate(e.idol.color, e.idol.position, e.idol.hp);
             board.damageIdol(e.idol.color, e.idol.position, e.amount);
