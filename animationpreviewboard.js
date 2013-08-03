@@ -160,6 +160,37 @@
         board[target.color].field[target.y][target.x] = undefined;
     };
 
+    var currentTurn;
+    exports.turnBegin = function (color) {
+        var x, y, elem, cd, ocolor = invertColor(color);
+        currentTurn = color;
+
+        for (y = 0; y < 5; y += 1) {
+            for (x = 0; x < 3; x += 1) {
+                //Current Player
+                elem = board[color].field[y][x];
+                if (elem !== undefined) {
+                    cd = parseInt(elem.children('.countdown').text(), 10);
+                    if (cd === 0) {
+                        elem.addClass('attackingSoon');
+                    } else {
+                        elem.removeClass('attackingSoon');
+                    }
+                }
+                //Other Player 
+                elem = board[ocolor].field[y][x];
+                if (elem !== undefined) {
+                    cd = parseInt(elem.children('.countdown').text(), 10);
+                    if (0 <= cd && cd <= 1) {
+                        elem.addClass('attackingSoon');
+                    } else {
+                        elem.removeClass('attackingSoon');
+                    }
+                }
+            }
+        }
+    };
+
     exports.statsUpdate = function (target, stats, callback) {
         var elem = board[target.color].field[target.y][target.x];
         if (stats.attack !== undefined) {
@@ -170,8 +201,7 @@
                 elem.children('.countdown').hide();
             } else {
                 elem.children('.countdown').show();
-                //TODO: show attackingSoon on the not current Active Player with countdown <= 1
-                if (stats.countdown === 0) {
+                if (stats.countdown === 0 || (currentTurn !== target.color && stats.countdown === 1)) {
                     elem.addClass('attackingSoon');
                 } else {
                     elem.removeClass('attackingSoon');

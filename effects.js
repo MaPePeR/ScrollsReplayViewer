@@ -1,7 +1,6 @@
 /*jslint browser: true, vars: true*/
 /*global scrollsdata, $, replayreader, board, handcards: false*/
 
-var currentTurn;
 //Effects module to handle NewEffect-Messages
 (function (exports) {
     "use strict";
@@ -51,7 +50,7 @@ var currentTurn;
             $("#roundcounter").text(e.turn);
             $("#playernamewhite, #playernameblack").removeClass("playernameactive");
             $("#playername" + e.color).addClass("playernameactive");
-            currentTurn = e.color;
+            board.turnBegin(e.color);
             displayMessage("Next Turn: " + replayreader.getName(e.color), nextEffect);
         },
         "ResourcesUpdate": function (e) {
