@@ -1,0 +1,7 @@
+*.sgr
+#To store images of the scrolls
+scrollimages/*
+#To store the main-image of the scroll (used to display on board)
+mainimages/*
+animationimages/*
+jquery-*.js
