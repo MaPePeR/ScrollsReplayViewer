@@ -134,7 +134,7 @@
     */
 
     exports.summonUnit = function (target, cardTypeId, callback) {
-        var elem = $('<div class="fieldscroll"><span class="attack stat"/><span class="countdown stat"/><span class="health stat"/><div class="animationpreview" style="background-image: url(' + scrollsdata.getAnimationPreviewURLForScroll(cardTypeId) + ');"></div></div>');
+        var elem = $('<div class="fieldscroll"><div class="buffs"></div><span class="attack stat"/><span class="countdown stat"/><span class="health stat"/><div class="animationpreview" style="background-image: url(' + scrollsdata.getAnimationPreviewURLForScroll(cardTypeId) + ');"></div></div>');
         var width = board.lastwidth, height = board.lastheight;
         var isBackRow = target.y % 2 === 1, color = target.color;
         elem.width(width / 4).height(width * 3 / 4 / 4).css('top', target.y * height / 5).css(replayreader.getPerspective() === color ? 'left' : 'right', (isBackRow ? width / 8 : width / 4) + target.x * width / 4);
@@ -213,8 +213,13 @@
             elem.children('.health').text(stats.health);
         }
         if (stats.buffs !== undefined) {
-            //TODO: Handle buffs
-            console.log(stats.buffs);
+            var buf = "", i;
+            for (i = 0; i < stats.buffs.length; i += 1) {
+                buf += '<div class="buff" title="' + stats.buffs[i].description + '">' + stats.buffs[i].name + '</div>';
+            }
+            elem.children('.buffs').html(buf);
+        } else {
+            elem.children('.buffs').html('');
         }
         if (callback !== undefined) {
             callback();
