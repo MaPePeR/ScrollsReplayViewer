@@ -1,7 +1,12 @@
+/*jslint browser: true */
 /*global $: false*/
 (function (exports) {
     "use strict";
     var source = "sg", scrollsData;
+    if (window.location.hostname === "localhost") { //TODO: fix for other places
+        console.log("testing on localhost");
+        source = "local";
+    }
 
     $.getJSON("http://a.scrollsguide.com/scrolls", function (data) {
         scrollsData = {};
