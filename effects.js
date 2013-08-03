@@ -99,6 +99,11 @@
             var target = getTarget(e.tile);
             board.removeUnit(target, nextEffect);
         },
+        "UnsummonUnit": function (e) {
+            var target = getTarget(e.target);
+            board.removeUnit(target);
+            nextEffect();
+        },
         "DamageUnit": function (e) {
             var target = getTarget(e.targetTile);
             board.statsUpdate(target, {'health': e.kill ? 0 : e.hp});
@@ -149,7 +154,7 @@
             elem.width($('#game').width()).height($('#game').height());
             animLayer.append(elem);
         }
-        //TODO: EnchantUnit, TargetTiles
+        //TODO: SiegeAttackTiles, HealIdol, UnitActivateAbility, EnchantUnit, TargetTiles
     };
 
     function playEffect(effect) {
