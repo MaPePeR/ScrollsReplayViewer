@@ -330,15 +330,17 @@
             var animation = {};
             var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4;
             animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
-            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx * 2 * milisecondsPerPixels,  callback);
+            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx *  milisecondsPerPixels,  callback);
         }
     };
 
     exports.unitAttackDone = function (attacker, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         var animation = {};
-        animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
-        elem.animate(animation, 250, 'linear', function () {
+        var direction = replayreader.getPerspective() === attacker.color ? 'left' : 'right';
+        var newx = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
+        animation[direction] = newx;
+        elem.animate(animation, (parseInt(elem.css(direction), 10) - newx) * 0.5 * milisecondsPerPixels, function () {
             callback();
             elem.css('z-index', zIndexForRow(attacker.y));
         });

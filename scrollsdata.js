@@ -1,8 +1,7 @@
 /*global $: false*/
 (function (exports) {
-    //TODO: rename module
     "use strict";
-    var source = "local", scrollsData;
+    var source = "sg", scrollsData;
 
     $.getJSON("http://a.scrollsguide.com/scrolls", function (data) {
         scrollsData = {};
