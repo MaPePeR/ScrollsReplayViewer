@@ -226,6 +226,16 @@
         }
     };
 
+    exports.enchantUnit = function (target, callback) {
+        var elem = board[target.color].field[target.y][target.x];
+        elem.css('border-color', 'yellow').animate({"border-width": 5, "margin-left": -5, "margin-top": -5}, 'slow').animate({"border-width": 1, "margin-left": 0, "margin-top": 0}, 'slow', function () {
+            $(this).css('border-color', 'black');
+            if (callback !== undefined) {
+                callback();
+            }
+        });
+    };
+
     exports.damageUnit = function (target, damage, callback) {
         var animLayer = $('#animationlayer');
         var animateElem = $('<div class="damage">' + damage + '</div>');
