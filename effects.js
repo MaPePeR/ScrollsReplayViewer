@@ -114,6 +114,10 @@
             board.healUnit(getTarget(e.target), e.amount);
             nextEffect();
         },
+        "HealIdol": function (e) {
+            board.healIdol(e.idol.color, e.idol.position, e.amount);
+            nextEffect();
+        },
         "DamageIdol": function (e) {
             board.idolUpdate(e.idol.color, e.idol.position, e.idol.hp);
             board.damageIdol(e.idol.color, e.idol.position, e.amount);

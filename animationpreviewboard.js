@@ -269,6 +269,22 @@
         });
     };
 
+    exports.healIdol = function (color, idolRow, amount, callback) {
+        var animLayer = $('#animationlayer');
+        var animateElem = $('<div class="healunit">' + amount + '</div>');
+        var elem = board[color].idols[idolRow];
+        animateElem.css('top', elem.offset().top - animLayer.offset().top).css('left', elem.offset().left - animLayer.offset().left).width(elem.width()).height(elem.height());
+        animLayer.append(animateElem);
+        animateElem.animate({'top': '-=100px', 'opacity': 0}, 1000, function () {
+            $(this).hide(function () {
+                $(this).remove();
+                if (callback !== undefined) {
+                    callback();
+                }
+            });
+        });
+    };
+
     exports.moveUnit = function (fromTarget, toTarget, callback) {
         if (fromTarget.color !== toTarget.color) {
             throw "moving units across boards is not yet implemented";
