@@ -1,5 +1,5 @@
 /*jslint browser: true, vars: true*/
-/*global images, $: false*/
+/*global scrollsdata, $: false*/
 
 //Handcards module - assumes, that cards are always added to the right.
 (function (exports) {
@@ -51,7 +51,7 @@
     }
 
     function addCard(card) {
-        var elem = $('<img class="handscroll" src="' + images.getScrollImageURL(card.typeId) + '"/>');
+        var elem = $('<img class="handscroll" src="' + scrollsdata.getScrollImageURL(card.typeId) + '"/>');
         elem.hide();
         $("#handcards").append(elem);
         currentHandCards.push(card);

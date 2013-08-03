@@ -71,4 +71,4 @@
             return "http://www.scrollsguide.com/app/animationimages/" + scrollsData[scrollid].animationpreview;
         };
     }
-}(this.images = {}));
+}(this.scrollsdata = {}));

@@ -1,5 +1,5 @@
 /*jslint browser: true, vars: true*/
-/*global images, $, replayreader, board, handcards: false*/
+/*global scrollsdata, $, replayreader, board, handcards: false*/
 
 var currentTurn;
 //Effects module to handle NewEffect-Messages
@@ -116,7 +116,7 @@ var currentTurn;
             nextEffect();
         },
         "CardPlayed": function (e) {
-            var elem = $('<img class="playedscroll" src="' + images.getScrollImageURL(e.card.typeId) + '"/>');
+            var elem = $('<img class="playedscroll" src="' + scrollsdata.getScrollImageURL(e.card.typeId) + '"/>');
             var animLayer = $('#animationlayer');
             elem.css('left', $('#handcards').offset().left - animLayer.offset().left + $('#handcards').width() / 2)
                 .css('top', $('#handcards').offset().top - animLayer.offset().top);
