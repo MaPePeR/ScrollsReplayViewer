@@ -221,7 +221,7 @@
                 }
             });
         });
-    }
+    };
 
     exports.damageIdol = function (color, idolRow, damage, callback) {
         var animLayer = $('#animationlayer');
@@ -237,7 +237,7 @@
                 }
             });
         });
-    }
+    };
 
     exports.moveUnit = function (fromTarget, toTarget, callback) {
         if (fromTarget.color !== toTarget.color) {
@@ -245,7 +245,7 @@
         }
         var elem = board[fromTarget.color].field[fromTarget.y][fromTarget.x];
         board[toTarget.color].field[toTarget.y][toTarget.x] = elem;
-        board[toTarget.color].fieldIds[toTarget.y][toTarget.x] = board[fromTarget.color].fieldIds[fromTarget.y][fromTarget.x]
+        board[toTarget.color].fieldIds[toTarget.y][toTarget.x] = board[fromTarget.color].fieldIds[fromTarget.y][fromTarget.x];
         board[fromTarget.color].field[fromTarget.y][fromTarget.x] = undefined;
         board[fromTarget.color].fieldIds[fromTarget.y][fromTarget.x] = undefined;
         var animateCss = {'top': toTarget.y * board.lastheight / 5};
@@ -284,10 +284,10 @@
         } else {
             var animation = {};
             var dx = board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4;
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( dx  ) + 'px';
+            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
             elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx * milisecondsPerPixels,  callback);
         }
-    }
+    };
 
     exports.unitAttackIdol = function (attacker, idolRow, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
@@ -299,10 +299,10 @@
         } else {
             var animation = {};
             var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4;
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( dx ) + 'px';
+            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
             elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx * 2 * milisecondsPerPixels,  callback);
         }
-    }
+    };
 
     exports.unitAttackDone = function (attacker, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
@@ -312,6 +312,6 @@
             callback();
             elem.css('z-index', zIndexForRow(attacker.y));
         });
-    }
+    };
 
 }(this.board = {}));
