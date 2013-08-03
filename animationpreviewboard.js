@@ -271,6 +271,9 @@
         }
     };
 
+    var milisecondsPerPixels = 1; // Lower value = faster
+    //Double the spead, when retreating from attack
+
     exports.unitAttackTile = function (attacker, attackedTile, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         if (scrollsdata.isRangedOrLobber(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
@@ -280,8 +283,9 @@
             }
         } else {
             var animation = {};
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4  ) + 'px';
-            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, 500, 'linear', callback);
+            var dx = board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4;
+            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( dx  ) + 'px';
+            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx * milisecondsPerPixels,  callback);
         }
     }
 
@@ -294,8 +298,9 @@
             }
         } else {
             var animation = {};
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4  ) + 'px';
-            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, 500, 'linear', callback);
+            var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4;
+            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + ( dx ) + 'px';
+            elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx * 2 * milisecondsPerPixels,  callback);
         }
     }
 
