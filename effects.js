@@ -92,6 +92,10 @@
             board.statsUpdate(target, {'attack': e.ap, 'countdown': e.ac, 'health': e.hp, 'buffs': e.buffs});
             nextEffect();
         },
+        "EnchantUnit": function (e) {
+            board.enchantUnit(getTarget(e.target));
+            nextEffect();
+        },
         "MoveUnit": function (e) {
             board.moveUnit(getTarget(e.from), getTarget(e.to), nextEffect);
         },
@@ -112,6 +116,10 @@
         },
         "HealUnit": function (e) {
             board.healUnit(getTarget(e.target), e.amount);
+            nextEffect();
+        },
+        "HealIdol": function (e) {
+            board.healIdol(e.idol.color, e.idol.position, e.amount);
             nextEffect();
         },
         "DamageIdol": function (e) {
@@ -154,7 +162,7 @@
             elem.width($('#game').width()).height($('#game').height());
             animLayer.append(elem);
         }
-        //TODO: SiegeAttackTiles, HealIdol, UnitActivateAbility, EnchantUnit, TargetTiles
+        //TODO: SiegeAttackTiles, HealIdol, UnitActivateAbility, TargetTiles
     };
 
     function playEffect(effect) {

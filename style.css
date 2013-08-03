@@ -88,6 +88,24 @@
       text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     }
 
+    .fieldscroll .buffs {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 4.5ex;
+      overflow: auto;
+      z-index: 100;
+    }
+    .buffs .buff {
+      border: 1px solid black;
+      margin: 1px;
+      padding: 1px;
+      background-color: rgb(255, 255, 255);
+      background-color: rgba(255, 255, 255, 0.5);
+      float: left;
+    }
+
     .stat {
       font-size: 20px;
       z-index: 300;
