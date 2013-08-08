@@ -150,7 +150,7 @@
     exports.removeUnit = function (target, callback) {
         var elem = board[target.color].field[target.y][target.x];
 
-        elem.hide(function () {
+        elem.animate({'opacity': 0}, function () {
             $(this).remove();
             if (callback !== undefined) {
                 callback();
