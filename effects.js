@@ -162,7 +162,7 @@
             elem.width($('#game').width()).height($('#game').height());
             animLayer.append(elem);
         }
-        //TODO: SiegeAttackTiles, HealIdol, UnitActivateAbility, TargetTiles
+        //TODO: SiegeAttackTiles, HealIdol, UnitActivateAbility, TargetTiles, SurrenderEffect
     };
 
     function playEffect(effect) {
