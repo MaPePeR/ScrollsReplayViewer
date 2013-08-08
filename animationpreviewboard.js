@@ -150,7 +150,7 @@
     exports.removeUnit = function (target, callback) {
         var elem = board[target.color].field[target.y][target.x];
 
-        elem.hide(function () {
+        elem.animate({'opacity': 0}, function () {
             $(this).remove();
             if (callback !== undefined) {
                 callback();
@@ -338,14 +338,19 @@
     exports.unitAttackTile = function (attacker, attackedTile, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         if (scrollsdata.isRangedOrLobber(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
-            //TODO: ranged attack
+            //TODO: ranged attack, with possibility to attack different row (HellSplitter Mortar)
             if (callback !== undefined) {
                 callback();
             }
         } else {
+            if (attackedTile.y !== attacker.y) {
+                throw "can not melee attack tile on different row!";
+            }
             var animation = {};
-            var dx = board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4;
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
+            var direction = replayreader.getPerspective() === attacker.color ? 'left' : 'right';
+            var posx = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
+            var dx = board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4 + posx - parseInt(elem.css(direction), 10);
+            animation[direction] = '+=' + dx + 'px';
             elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx * milisecondsPerPixels,  callback);
         }
     };
@@ -354,13 +359,19 @@
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         if (scrollsdata.isRangedOrLobber(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
             //TODO: ranged attack
+            //Metal wonder attacks idols on different rows. - is that an attack?!
             if (callback !== undefined) {
                 callback();
             }
         } else {
+            if (idolRow !== attacker.y) {
+                throw "can not melee-attack idol on different row!";
+            }
             var animation = {};
-            var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4;
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
+            var direction = replayreader.getPerspective() === attacker.color ? 'left' : 'right';
+            var posx = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
+            var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4 + posx - parseInt(elem.css(direction), 10);
+            animation[direction] = '+=' + dx + 'px';
             elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx *  milisecondsPerPixels,  callback);
         }
     };
