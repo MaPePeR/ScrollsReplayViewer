@@ -30,7 +30,21 @@ function invertColor(color) {
             return this.parseMessage(this.messagecount - 1);
         };
         this.getHeaders = function () {
-            var servInfo = this.parseMessage(0), gameInfo = this.parseMessage(1);
+            var servInfo = this.parseMessage(0), gameInfo, i, m;
+            if (servInfo.msg !== "ServerInfo") {
+                throw "Coudn't find ServerInfo-Message!";
+            }
+            for (i = 1; i < this.messages.length; i += 1) {
+                m = this.parseMessage(i);
+                if (m.msg === "GameInfo") {
+                    gameInfo = m;
+                } else if (m.msg === "ActiveResources") {
+                    this.messagecount = i;
+                    break;
+                } else {
+                    console.log("Skipping:", m);
+                }
+            }
             return {
                 "version": servInfo.version,
                 "black" : gameInfo.black,
