@@ -347,8 +347,10 @@
                 throw "can not melee attack tile on different row!";
             }
             var animation = {};
-            var dx = board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4;
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
+            var direction = replayreader.getPerspective() === attacker.color ? 'left' : 'right';
+            var posx = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
+            var dx = board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4 + posx - parseInt(elem.css(direction), 10);
+            animation[direction] = '+=' + dx + 'px';
             elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx * milisecondsPerPixels,  callback);
         }
     };
@@ -366,8 +368,10 @@
                 throw "can not melee-attack idol on different row!";
             }
             var animation = {};
-            var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4;
-            animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
+            var direction = replayreader.getPerspective() === attacker.color ? 'left' : 'right';
+            var posx = (attacker.y % 2 === 1 ? board.lastwidth / 8 : board.lastwidth / 4) + attacker.x * board.lastwidth / 4;
+            var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4 + posx - parseInt(elem.css(direction), 10);
+            animation[direction] = '+=' + dx + 'px';
             elem.css('z-index', zIndexForRow(attacker.y) + 50).animate(animation, dx *  milisecondsPerPixels,  callback);
         }
     };
