@@ -338,11 +338,14 @@
     exports.unitAttackTile = function (attacker, attackedTile, callback) {
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         if (scrollsdata.isRangedOrLobber(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
-            //TODO: ranged attack
+            //TODO: ranged attack, with possibility to attack different row (HellSplitter Mortar)
             if (callback !== undefined) {
                 callback();
             }
         } else {
+            if (attackedTile.y !== attacker.y) {
+                throw "can not melee attack tile on different row!";
+            }
             var animation = {};
             var dx = board.lastwidth * ((2 - attacker.x) + (2 - attackedTile.x) + (attacker.y % 2) + 0.5) / 4;
             animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
@@ -354,10 +357,14 @@
         var elem = board[attacker.color].field[attacker.y][attacker.x];
         if (scrollsdata.isRangedOrLobber(board[attacker.color].fieldIds[attacker.y][attacker.x])) {
             //TODO: ranged attack
+            //Metal wonder attacks idols on different rows. - is that an attack?!
             if (callback !== undefined) {
                 callback();
             }
         } else {
+            if (idolRow !== attacker.y) {
+                throw "can not melee-attack idol on different row!";
+            }
             var animation = {};
             var dx = board.lastwidth * ((2 - attacker.x) + 3 + (attacker.y % 2 === 1 ? 1 : 0.5) + 0.25) / 4;
             animation[replayreader.getPerspective() === attacker.color ? 'left' : 'right'] = '+=' + dx + 'px';
